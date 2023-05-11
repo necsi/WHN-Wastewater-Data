@@ -4,8 +4,8 @@
 name: Update CDC Virus Concentration in Wastewater
 
 on:
-  push:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
   schedule:
     - cron: '25 09 * * *'
 
