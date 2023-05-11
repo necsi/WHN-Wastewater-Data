@@ -1,2 +1,3 @@
 numpy==1.22.3
 pandas==1.4.1
+sodapy==2.2.0
