@@ -1,0 +1,20 @@
+Please add to it/update:
+
+Sweden:
+https://www.covid19dataportal.se/sv/dashboards/wastewater/covid_quant_slu/
+
+Netherlands:
+https://coronadashboard.government.nl/landelijk/rioolwater
+
+USA:
+https://biobot.io/data/
+
+Canada:
+https://613covid.ca/model/#wastewater
+https://health-infobase.canada.ca/covid-19/wastewater/?dateSel=alltime&sort=asc&grid=1&regions=16,1,2,12,3,13,14,4,5,6,7,15,20,25,26,27,8,21,22,23,24,9,10,17,18,19,11&showDailyValues=true#dashboard
+
+
+Germany:
+Kempten https://www.avke.de/corona-monitoring.html
+https://twitter.com/RolandJger4/status/1652568807460724736?s=20
+https://twitter.com/rv_enigma/status/1652955413707456512?s=20
