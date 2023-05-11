@@ -7,7 +7,9 @@ Netherlands:
 https://coronadashboard.government.nl/landelijk/rioolwater
 
 USA:
-https://biobot.io/data/
+CDC Metric Data (percent change): https://data.cdc.gov/Public-Health-Surveillance/NWSS-Public-SARS-CoV-2-Wastewater-Metric-Data/2ew6-ywp6
+CDC Virus Concentration: https://data.cdc.gov/Public-Health-Surveillance/NWSS-Public-SARS-CoV-2-Concentration-in-Wastewater/g653-rqe2
+(Biobot: https://biobot.io/data/)
 
 Canada:
 https://613covid.ca/model/#wastewater
