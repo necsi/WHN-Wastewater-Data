@@ -1,5 +1,10 @@
 Please add to it/update:
 
+
+Links to many dashboards in various countries:
+https://de.dwa.de/files/_media/content/01_DIE_DWA/Forschung%20und%20Innovation/CoroMoni/CoroMoni_Links_Dashboards_neu.pdf
+
+
 Sweden:
 https://www.covid19dataportal.se/sv/dashboards/wastewater/covid_quant_slu/
 
@@ -20,3 +25,6 @@ Germany:
 Kempten https://www.avke.de/corona-monitoring.html
 https://twitter.com/RolandJger4/status/1652568807460724736?s=20
 https://twitter.com/rv_enigma/status/1652955413707456512?s=20
+
+
+
