@@ -23,4 +23,4 @@ results = client.get("g653-rqe2", limit=200000000)
 
 # Convert to pandas DataFrame
 results_df = pd.DataFrame.from_records(results)
-results_df.to_csv('cdc_wastewater_data.csv')
+results_df.to_csv('data/USA/cdc_wastewater_data.csv')

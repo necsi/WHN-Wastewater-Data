@@ -23,4 +23,4 @@ results = client.get("2ew6-ywp6", limit=200000000)
 
 # Convert to pandas DataFrame
 results_df = pd.DataFrame.from_records(results)
-results_df.to_csv('cdc_wastewater_metric_perc_change.csv')
+results_df.to_csv('data/USA/cdc_wastewater_metric_perc_change.csv')
