@@ -8,6 +8,6 @@ df = df.rename(columns={'relative_copy_number': 'rel_copy_number',
                         'infB-gene cn per PMMoV cn x 10000': 'infB'})
 
 # Create SQLite connection object
-con = sl.connect('sweden_data.db')
+con = sl.connect('../data/sweden_data.db')
 
 df.to_sql('SWEDEN_WW', con)
