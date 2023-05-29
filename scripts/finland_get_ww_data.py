@@ -29,7 +29,14 @@ driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
 # Open the webpage
 driver.get('https://www.thl.fi/episeuranta/jatevesi/wastewater_weekly_report.html')  
 
-time.sleep(30)
+time.sleep(2)
+
+# print the current URL
+print("Current URL:", driver.current_url)
+
+# print the page source
+print("Page Source:", driver.page_source[:200]) 
+
 
 # Locate the 'Data' tab using its href attribute
 data_tab = driver.find_element(By.XPATH, '//a[@href="#data"]')
