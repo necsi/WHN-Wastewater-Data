@@ -12,7 +12,10 @@ import glob
 webdriver_service = Service(ChromeDriverManager().install())
 chrome_options = Options()
 
-download_dir = os.environ['GITHUB_WORKSPACE'] 
+download_dir = os.path.join(os.environ['GITHUB_WORKSPACE'], 'data', 'Finland') 
+
+# Ensure the subdirectory exists
+os.makedirs(download_dir, exist_ok=True)
 
 # Set up Chrome to automatically download files to the specified directory
 chrome_options.add_experimental_option('prefs', {
@@ -50,7 +53,8 @@ list_of_files = glob.glob(download_dir + '/*.csv')
 latest_file = max(list_of_files, key=os.path.getctime)
 
 # Rename the CSV file
-os.rename(latest_file, download_dir + '/fi_wastewater_data.csv')
+os.rename(latest_file, os.path.join(download_dir, 'fi_wastewater_data.csv'))
+
 
 # Close the driver
 driver.quit()
