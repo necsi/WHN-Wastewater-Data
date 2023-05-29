@@ -11,6 +11,7 @@ import glob
 # Setup webdriver
 webdriver_service = Service(ChromeDriverManager().install())
 chrome_options = Options()
+chrome_options.add_argument('--headless') 
 
 download_dir = os.path.join(os.environ['GITHUB_WORKSPACE'], 'data', 'Finland') 
 
