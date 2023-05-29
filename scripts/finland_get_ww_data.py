@@ -12,6 +12,8 @@ import glob
 webdriver_service = Service(ChromeDriverManager().install())
 chrome_options = Options()
 chrome_options.add_argument('--headless') 
+chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36')
+
 
 download_dir = os.path.join(os.environ['GITHUB_WORKSPACE'], 'data', 'Finland') 
 
