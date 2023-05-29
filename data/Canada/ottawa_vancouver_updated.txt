@@ -1,0 +1,3 @@
+Ottawa: https://github.com/Big-Life-Lab/PHESD/tree/main/Wastewater/Ottawa/Data
+
+Vancouver: https://docs.google.com/spreadsheets/d/192TjKQOceBepmoB2qwUBg0-QX8cXIbrum0vB3bnroOI/edit#gid=0 (visualized: https://anarchodelphis.tumblr.com/BCWW)
