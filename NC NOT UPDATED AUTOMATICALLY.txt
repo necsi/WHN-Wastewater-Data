@@ -1,0 +1,1 @@
+Yingnan, there is a Tableau dashboard right here for the wastewater data https://covid19.ncdhhs.gov/dashboard/data-behind-dashboards and I don't know if it is more straightforward to direclty download the data in tableau for the visualization of North Carolina data
