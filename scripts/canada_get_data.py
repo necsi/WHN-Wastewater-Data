@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Read fecal shedding model
-shedding = pd.read_csv('../FecalSheddingModel.csv', index_col=0)
+shedding = pd.read_csv('FecalSheddingModel.csv', index_col=0)
 
 # Read the second row, first columns to get the column names
 col_names_ww_VCH_F = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQBi1bvkrF8c_46Ak5exKm07Nqej7Es1N-HHh9LHuR6M-tOF1H46H1ztCB5nSlPb_mJ7uGdsjA4proZ/pub?gid=1782200355&single=true&output=csv', header=None, nrows=1, usecols=range(6), skiprows=1).iloc[0]
@@ -37,4 +37,4 @@ ww_IH = ww_IH * 1000
 ww = pd.concat([ww_VCH_F, ww_VIHA, ww_IH], axis=1)
 
 # Save as csv
-ww.to_csv('../data/Canada/ww_BC_Canada.csv')
+ww.to_csv('data/Canada/ww_BC_Canada.csv')
