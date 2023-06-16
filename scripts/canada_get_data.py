@@ -36,5 +36,8 @@ ww_IH = ww_IH * 1000
 # Concatenate all dataframes
 ww = pd.concat([ww_VCH_F, ww_VIHA, ww_IH], axis=1)
 
+# Interpolate missing values in each column
+ww = ww.interpolate(method='linear', axis=0)
+
 # Save as csv
 ww.to_csv('data/Canada/ww_BC_Canada.csv')
