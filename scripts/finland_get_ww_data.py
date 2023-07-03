@@ -54,25 +54,32 @@ time.sleep(5)
 
 # Locate the CSV download buttons
 csv_buttons = driver.find_elements(By.CSS_SELECTOR, '.dt-button.buttons-csv.buttons-html5')
-print(csv_buttons)
+print(f'CSV Buttons Found: {len(csv_buttons)}')
 
-# Click each button to start CSV download
-for button in csv_buttons:
-    button.click()
-    time.sleep(5)  # wait for the download to complete
+if len(csv_buttons) >= 2:
+    # Click first button to start CSV download (assuming this is 'wastewater')
+    csv_buttons[0].click()
+    time.sleep(10)  # wait for the download to complete
 
-# Find the latest downloaded CSV files
-list_of_files = glob.glob(download_dir + '/*.csv')
+    # Find the latest downloaded CSV file (should be 'wastewater')
+    list_of_files = glob.glob(download_dir + '/*.csv')
+    latest_file = max(list_of_files, key=os.path.getctime)
+    
+    # Rename the CSV file
+    os.rename(latest_file, download_dir + '/fi_wastewater_data.csv')
+    
+    # Click second button to start CSV download (assuming this is 'estimated infections')
+    csv_buttons[1].click()
+    time.sleep(10)  # wait for the download to complete
 
-# Ensure we have at least two files
-if len(list_of_files) >= 2:
-    # Sort files by creation time (newest first)
-    list_of_files.sort(key=os.path.getctime, reverse=True)
-
-    # Rename the CSV files
-    os.rename(list_of_files[0], download_dir + '/fi_wastewater_data.csv')
-    os.rename(list_of_files[1], download_dir + '/FinlandEstimCasesSewersheds.csv')
+    # Find the latest downloaded CSV file (should be 'estimated infections')
+    list_of_files = glob.glob(download_dir + '/*.csv')
+    latest_file = max(list_of_files, key=os.path.getctime)
+    
+    # Rename the CSV file
+    os.rename(latest_file, download_dir + '/FinlandEstimCasesSewersheds.csv')
 else:
-    print('Error: Less than 2 files downloaded.')
+    print('Error: Less than 2 CSV buttons found.')
+
 # Close the driver
 driver.quit()
