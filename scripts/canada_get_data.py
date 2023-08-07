@@ -36,6 +36,10 @@ ww_IH = ww_IH * 1000
 # Concatenate all dataframes
 ww = pd.concat([ww_VCH_F, ww_VIHA, ww_IH], axis=1)
 
+# Delete all rows at the end that contain only NaN entries
+last_valid_index = ww.dropna(how='all').last_valid_index()
+ww = ww.loc[:last_valid_index]
+
 # Interpolate missing values in each column
 ww = ww.interpolate(method='linear', axis=0)
 
