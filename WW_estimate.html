@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+    <script src="fm.tagator.jquery.js"></script>
+    <title>Estimated Infections from Wastewater</title>
+</head>
+<body>
+  <select id="countries"></select>
+  <select id="regions"></select>
+  <style>
+    #main,
+    html,
+    body {
+      width: 100%;
+    }
+    #main {
+      height: 400px;
+    }
+  </style>
+  <div id="main"></div>
+
+<script>
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+    window.addEventListener('resize', function() {
+      myChart.resize();
+    });
+
+    function updateData() {
+        fetch(`./US_ww.json`)
+            .then(response => response.json())
+            .then(data => {
+                var series = [];
+                var labels = [];
+                var legends = ['Parental Estimate', 'Omicron Estimate'];
+
+                var parentalData = data.map(item => {
+                    return {
+                        value: item.Parental_estimate,
+                        name: new Date(item.Date).toLocaleDateString()
+                    };
+                });
+                var omicronData = data.map(item => {
+                    return {
+                        value: item.Omicron_estimate,
+                        name: new Date(item.Date).toLocaleDateString()
+                    };
+                });
+
+                series.push({
+                    name: 'Parental Estimate',
+                    type: 'line',
+                    data: parentalData,
+                    showSymbol: false
+                });
+
+                series.push({
+                    name: 'Omicron Estimate',
+                    type: 'line',
+                    data: omicronData,
+                    showSymbol: false
+                });
+
+                labels = data.map(item => new Date(item.Date).toLocaleDateString());
+
+                myChart.setOption({
+		toolbox: {
+        		show: true,
+        		feature: {
+            		dataZoom: {
+                		yAxisIndex: 'none',
+               		 title: {
+                    		zoom: 'Zoom by rectangle',
+                    		back: 'Reset zoom'
+               		 }
+            		},
+            		dataView: { readOnly: false, title: 'View data', lang: ['Data View', 'Close', 'Refresh'] },
+            		magicType: { type: ['line', 'bar'], title: { line: 'Switch to Line Chart', bar: 'Switch to Bar Chart' } },
+            		restore: { title: 'Restore' },
+            		saveAsImage: { title: 'Save as Image' }
+        		}
+    		},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: legends
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: labels
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: 'Estimated Infections'
+                    },
+                    series: series
+                }, true);
+            }).catch(err => {
+                console.error(err);
+            });
+    }
+
+    updateData();
+</script>
+</body>
+</html>
