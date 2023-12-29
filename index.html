@@ -54,14 +54,14 @@
                     name: 'Min',
                     type: 'line',
                     data: parentalData,
-                    showSymbol: true
+                    showSymbol: false
                 });
 
                 series.push({
                     name: 'Max',
                     type: 'line',
                     data: omicronData,
-                    showSymbol: true
+                    showSymbol: false
                 });
 
                 labels = data.map(item => new Date(item.Date).toLocaleDateString());
