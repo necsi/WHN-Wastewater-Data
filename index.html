@@ -9,19 +9,7 @@
     <title>Estimated Infections from Wastewater</title>
 </head>
 <body>
-  <select id="countries"></select>
-  <select id="regions"></select>
-  <style>
-    #main,
-    html,
-    body {
-      width: 100%;
-    }
-    #main {
-      height: 400px;
-    }
-  </style>
-  <div id="main"></div>
+  
 
 <script>
     var chartDom = document.getElementById('main');
@@ -55,14 +43,14 @@
                     name: 'Min',
                     type: 'line',
                     data: parentalData,
-                    showSymbol: false
+                    showSymbol: true
                 });
 
                 series.push({
                     name: 'Max',
                     type: 'line',
                     data: omicronData,
-                    showSymbol: false
+                    showSymbol: true
                 });
 
                 labels = data.map(item => new Date(item.Date).toLocaleDateString());
