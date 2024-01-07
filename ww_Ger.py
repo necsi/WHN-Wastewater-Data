@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
+import re
 
 
 # URL of the web page containing Plotly chart
@@ -23,7 +24,7 @@ else:
     print("First part script tag not found. Check if the HTML structure has changed.")
 
 # Find the second script tag containing the remaining part of JSON data
-script_tag_second_part = soup.find('script', {'data-for': 'htmlwidget'})
+script_tag_second_part = soup.find('script', {'data-for': re.compile(r'htmlwidget.*')})
 if script_tag_second_part:
     # Extract and load the second part of JSON data
     json_data_second_part = json.loads(script_tag_second_part.contents[0])
