@@ -96,5 +96,5 @@ for region in df_map.columns:
 df_all_regions = df_all_regions[['region', 'x', 'y']]
 
 # Saving the dataframe to a CSV file
-output_csv_path = 'German_wastewater_data.csv'
+output_csv_path = 'data/German_wastewater_data.csv'
 df_all_regions.to_csv(output_csv_path, index=False)
