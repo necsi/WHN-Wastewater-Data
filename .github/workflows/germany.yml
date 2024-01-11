@@ -4,8 +4,8 @@
 name: Update German Wastewater data
 
 on:
-  #push:
-    #branches: [ main ]
+  push:
+    branches: [ main ]
   schedule:
     - cron: '51 08 * * *'
 
@@ -37,6 +37,7 @@ jobs:
     - name: Process Data
       run: |
         python ww_Ger.py
+        python ww_raw_Ger.py
     #- uses: actions/checkout@v3
     #- run: |
     #      git config user.name github-actions
