@@ -4,8 +4,8 @@
 name: Update German Wastewater data
 
 on:
-  push:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
   schedule:
     - cron: '51 08 * * *'
 
@@ -36,8 +36,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Process Data
       run: |
-        python ww_Ger.py
-        python ww_raw_Ger.py
+        python scripts/ww_Ger.py
+        python scripts/ww_raw_Ger.py
     #- uses: actions/checkout@v3
     #- run: |
     #      git config user.name github-actions
