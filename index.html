@@ -9,7 +9,8 @@
     <title>Estimated Infections from Wastewater</title>
 </head>
 <body>
-  
+  <select id="countries"></select>
+  <select id="regions"></select>
   <style>
     #main,
     html,
@@ -21,90 +22,146 @@
     }
   </style>
   <div id="main"></div>
+  
+  <script>
+      var countries = ['United_States'];
+      var regions = ['Nationwide'];
+      var measures = ['wastewater', 'inf'];
+      $("#countries").html(countries.map(country => `<option value="${country}">${country}</option>`).join(""));
+      $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+     
+      var chartDom = document.getElementById('main');
+      var myChart = echarts.init(chartDom);
+      window.addEventListener('resize', function() {
+        myChart.resize();
+      });
+      
+      function updateData() {
+          var selected_country = $('#countries').val();
+          var selected_region = $('#regions').val();
+          var selected_measures = measures;
+          fetch(`./${selected_country}_states_cleaned.json`)
+              .then(response => response.json())
+              .then(data => {
+                  var series = [];
+                  var labels = [];
+                  var legends = [];
+                  var dataValue = [];
+                  var firstNonZeroDate = Infinity;
+                  selected_measures.forEach((measure, index) => {
+                      let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
+                      // Find first non-zero or non-NaN date
+                      for (let i = 0; i < filteredData.length; i++) {
+                          if (filteredData[i].Value !== 0 && filteredData[i].Value !== null) {
+                              firstNonZeroDate = Math.min(firstNonZeroDate, new Date(filteredData[i].Date).getTime());
+                              break;
+                          }
+                      }
+                  });
+                  selected_measures.forEach((measure, index) => {
+                    let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
+                    // Remove leading zeros and NaNs
+                    filteredData = filteredData.filter(item => new Date(item.Date).getTime() >= firstNonZeroDate);
+                      let timeData = filteredData.map(item => {
+                          let date = new Date(item.Date);
+                          return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                      });
+                      let valueData = filteredData.map(item => item.Value);
+                      let label;
+                      let yAxisIndex;
+                      switch (measure) {
+                          case 'wastewater':
+                              label = 'Wastewater';
+                              yAxisIndex = 0;
+                              break;
+                          case 'inf':
+                              label = 'Estimated Infections';
+                              yAxisIndex = 1;
+                              break;
+                          case 'official':
+                              label = 'Official Infections';
+                              yAxisIndex = 1;
+                              break;
+                      }
+                      labels = [...new Set([...labels, ...timeData])].sort();
+                      if (valueData.length > 0) {
+                        series.push({
+                            name: label,
+                            type: 'line',
+                            data: valueData,
+                            yAxisIndex: yAxisIndex,
+                            showSymbol: false
+                        });
+                        legends.push(label);
+                      }
+                  });
+                  myChart.setOption({
+                      tooltip: {
+                          trigger: 'axis',
+                          formatter: function(params) {
+                              var result = params[0].axisValueLabel + '<br>';
+                              params.forEach(function(item) {
+                                  result += item.marker + ' ' + item.seriesName + ': ' + Math.round(item.data) + '<br>';
+                              });
+                              return result;
+                          }
+                      },
+                      legend: {
+                            data: legends
+                      },
+                      toolbox: {
+                        show: true,
+                        feature: {
+                          dataZoom: {
+                            yAxisIndex: 'none'
+                          },
+                          dataView: { readOnly: false },
+                          magicType: { type: ['line', 'bar'] },
+                          restore: {},
+                          saveAsImage: {}
+                        }
+                      },
+                      xAxis: {
+                          type: 'category',
+                          data: labels
+                      },
+                      yAxis: [{
+                          type: 'value',
+                          name: 'Wastewater (copies / mL of sewage)'
+                      }, {
+                          type: 'value',
+                          name: 'New Infections'
+                      }],
+                      series: series
+                  }, true);
+                  
+              });
+      }
+      function updateRegionsAndMeasures(data) {
+          let regions = [...new Set(data.map(item => item.Region))];
+          $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+          let measures = [...new Set(data.map(item => item.Measure))];
+          measures = measures.filter(measure => measure != null);
+         
+      }
+      function loadData() {
+          fetch(`./${$("#countries").val()}_states_cleaned.json`)
+          .then(response => response.json())
+          .then(data => {
+              updateRegionsAndMeasures(data);
+              updateData();
+          }).catch(err => {
+              console.log(err);
+          });
+      }
+      loadData();
+      $("#countries").on("change", function() {
+          loadData();
+      });
+      $("#countries, #regions, #measuresInput").on("change", function() {
+          updateData();
+      });
+  </script>
 
-<script>
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
-    window.addEventListener('resize', function() {
-      myChart.resize();
-    });
-
-    function updateData() {
-        fetch(`./US_ww.json`)
-            .then(response => response.json())
-            .then(data => {
-                var series = [];
-                var labels = [];
-                var legends = ['Parental Estimate', 'Omicron Estimate'];
-
-                var parentalData = data.map(item => {
-                    return {
-                        value: item.Parental_estimate,
-                        name: new Date(item.Date).toLocaleDateString()
-                    };
-                });
-                var omicronData = data.map(item => {
-                    return {
-                        value: item.Omicron_estimate,
-                        name: new Date(item.Date).toLocaleDateString()
-                    };
-                });
-
-                series.push({
-                    name: 'Min',
-                    type: 'line',
-                    data: parentalData,
-                    showSymbol: false
-                });
-
-                series.push({
-                    name: 'Max',
-                    type: 'line',
-                    data: omicronData,
-                    showSymbol: false
-                });
-
-                labels = data.map(item => new Date(item.Date).toLocaleDateString());
-
-                myChart.setOption({
-		toolbox: {
-        		show: true,
-        		feature: {
-            		dataZoom: {
-                		yAxisIndex: 'none',
-               		 title: {
-                    		zoom: 'Zoom by rectangle',
-                    		back: 'Reset zoom'
-               		 }
-            		},
-            		dataView: { readOnly: false, title: 'View data', lang: ['Data View', 'Close', 'Refresh'] },
-            		magicType: { type: ['line', 'bar'], title: { line: 'Switch to Line Chart', bar: 'Switch to Bar Chart' } },
-            		restore: { title: 'Restore' },
-            		saveAsImage: { title: 'Save as Image' }
-        		}
-    		},
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    legend: {
-                        data: legends
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: labels
-                    },
-                    yAxis: {
-                        type: 'value',
-                        name: 'Estimated Infections'
-                    },
-                    series: series
-                }, true);
-            }).catch(err => {
-                console.error(err);
-            });
-    }
-
-    updateData();
-</script>
 </body>
 </html>
