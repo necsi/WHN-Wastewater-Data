@@ -2,3 +2,4 @@ numpy==1.22.3
 pandas==1.4.1
 sodapy==2.2.0
 beautifulsoup4==4.12.2
+requests==2.31.0
