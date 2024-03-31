@@ -40,7 +40,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git commit --allow-empty -m "Auto-update of the data packages" -a
+        git commit --all --allow-empty -m "Auto-update of the data packages"
         git pull --rebase=false
     - name: Push changes
       uses: ad-m/github-push-action@master
