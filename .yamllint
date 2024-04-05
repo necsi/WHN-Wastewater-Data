@@ -1,0 +1,13 @@
+---
+
+extends: default
+
+rules:
+  brackets: enable
+  document-start: disable
+  indentation: disable
+  line-length: disable
+  trailing-spaces: enable
+
+# Based on https://yamllint.readthedocs.io/en/stable/configuration.html
+# A rule can be removed once it flags no file any more.
