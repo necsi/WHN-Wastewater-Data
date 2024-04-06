@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
+        pip install flake8 pytest selenium webdriver_manager
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Lint with flake8
@@ -36,6 +36,9 @@ jobs:
 
     - name: Get and process data for all countries
       run: |
+        # Finland
+        python scripts/finland_get_ww_data.py || true
+        
         # United States (conversion factor approach)
         python ww_factor_US_states.py && python ww_factor_US.py
 
