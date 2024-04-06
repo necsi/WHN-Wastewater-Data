@@ -1,4 +1,4 @@
-name: Update US Wastewater data (conversion factor approach)
+name: Update wastewater data for all countries
 
 on:  # yamllint disable-line rule:truthy
   push:
@@ -34,12 +34,13 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Process Data
+    - name: Get and process data for all countries
       run: |
-        python ww_factor_US_states.py
-        python ww_factor_US.py
+        # United States (conversion factor approach)
+        python ww_factor_US_states.py && python ww_factor_US.py
 
-    - name: commit files
+
+    - name: Commit all updated files
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
