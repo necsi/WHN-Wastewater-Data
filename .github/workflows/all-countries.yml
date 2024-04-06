@@ -39,6 +39,10 @@ jobs:
         # United States (conversion factor approach)
         python ww_factor_US_states.py && python ww_factor_US.py
 
+        # US CDC
+        python get_virus_concentration_wastewater_cdc.py  \
+        && python get_wastewater_change_cdc.py            \
+        || true
 
     - name: Commit all updated files
       run: |
