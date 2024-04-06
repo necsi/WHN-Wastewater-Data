@@ -36,9 +36,30 @@ jobs:
 
     - name: Get and process data for all countries
       run: |
+        # Canada
+        python scripts/canada_get_data.py || true
+
         # Finland
         python scripts/finland_get_ww_data.py || true
-        
+
+        # Germany
+        python scripts/ww_Ger.py         \
+        && python scripts/ww_raw_Ger.py  \
+        || true
+
+        # Netherlands
+        python scripts/get_data_Netherlands.py || true
+
+        # Slovenia
+        python scripts/slovenia_get_ww_data.py
+
+        # Sweden
+        swe_csv=https://datagraphics.dckube.scilifelab.se/dataset/0ac8fa02871745048491de74e5689da9.csv
+        curl -L $swe_csv --output "data/Sweden/Sweden_ww.csv" || true
+
+        # Switzerland
+        python scripts/switzerland_get_ww_data.py || true
+
         # United States (conversion factor approach)
         python ww_factor_US_states.py && python ww_factor_US.py
 
