@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <script src="fm.tagator.jquery.js"></script>
+    <title>Estimated Infections from Wastewater</title>
+</head>
+<body>
+  <select id="sources"></select>
+  <select id="regions"></select>
+  <style>
+    #main,
+    html,
+    body {
+      width: 100%;
+    }
+    #main {
+      height: 400px;
+    }
+  </style>
+  <div id="main"></div>
+  
+  <script>
+      var sources = ['NWSS','Biobot'];
+      var regions = ['Nationwide'];
+      var measures = ['wastewater', 'inf'];
+      $("#sources").html(sources.map(source => `<option value="${source}">${source}</option>`).join(""));
+      $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+     
+      var chartDom = document.getElementById('main');
+      var myChart = echarts.init(chartDom);
+      window.addEventListener('resize', function() {
+        myChart.resize();
+      });
+      
+      function updateData() {
+            var selected_source = $('#sources').val();
+            var selected_region = $('#regions').val();
+            var selected_measures = measures;
+            fetch(`./${selected_source}_ww.json`)
+                .then(response => response.json())
+                .then(data => {
+                    var series = [];
+                    var labels = [];
+                    var legends = [];
+                    var yAxisData = [[], []]; // Array to hold data for both y-axes
+
+                    selected_measures.forEach((measure, index) => {
+                        let filteredData = data.filter(item => item.Region === selected_region && item.Measure === measure);
+                        let timeData = filteredData.map(item => {
+                            let date = new Date(item.Date);
+                            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                        });
+                        let valueData = filteredData.map(item => item.Value);
+                        let label;
+                        let yAxisIndex;
+                        switch (measure) {
+                            case 'wastewater':
+                                label = 'Wastewater';
+                                yAxisIndex = 0;
+                                break;
+                            case 'inf':
+                                label = 'Estimated Infections';
+                                yAxisIndex = 1;
+                                break;
+                        }
+                        labels = [...new Set([...labels, ...timeData])].sort();
+                        yAxisData[yAxisIndex] = yAxisData[yAxisIndex].concat(valueData);
+                        series.push({
+                            name: label,
+                            type: 'line',
+                            data: valueData,
+                            yAxisIndex: yAxisIndex,
+                            showSymbol: false,
+                            // markArea: {
+                            //     data: [
+                            //         [{ name: 'Start of 1st Adjustment', xAxis: '2021-12-17' }, { xAxis: '2022-01-16' }],
+                            //         [{ name: 'Start of 2nd Adjustment', xAxis: '2022-08-01' }, { xAxis: '2022-08-31' }]
+                            //     ]
+                            // }
+                        });
+                        legends.push(label);
+                    });
+
+                    // Calculate initial max values and the ratio
+                    let maxWastewater = roundToTwoSignificantDigits(Math.max(...yAxisData[0]));
+                    let maxInfections = roundToTwoSignificantDigits(Math.max(...yAxisData[1]));
+                    let yAxisRatio = maxInfections / maxWastewater;
+
+                    console.log("Initial max values and ratio:", maxWastewater, maxInfections, yAxisRatio);
+
+
+                    myChart.setOption({
+                        tooltip: {
+                          trigger: 'axis',
+                          formatter: function(params) {
+                              var result = params[0].axisValueLabel + '<br>';
+                              params.forEach(function(item) {
+                                  result += item.marker + ' ' + item.seriesName + ': ' + Math.round(item.data) + '<br>';
+                              });
+                              return result;
+                          }
+                        },
+                        legend: { data: legends },
+                        toolbox: {
+                        show: true,
+                        feature: {
+                          dataZoom: {
+                            yAxisIndex: 'none'
+                          },
+                          dataView: { readOnly: false },
+                          magicType: { type: ['line', 'bar'] },
+                          restore: {},
+                          saveAsImage: {}
+                        }
+                      },
+                        xAxis: { type: 'category', data: labels },
+                        yAxis: [{
+                            type: 'value',
+                            name: 'Wastewater (Biobot: copies/mL, NWSS: copies/capita)',
+                            min: 0,
+                            max: maxWastewater
+                        }, {
+                            type: 'value',
+                            name: 'New Infections',
+                            nameGap: 6,
+                            min: 0,
+                            max: maxInfections
+                        }],
+                        series: series
+                    }, true);
+
+                    // Setup the dataZoom event handler
+                    myChart.on('dataZoom', function (params) {
+                        try {
+                            console.log("DataZoom event:", params.batch, params.batch.length);
+                            // Check if the zoom is reset
+                            if (!params.batch || params.batch.length === 0 || params.batch[0].start === 0) {
+                                // Reset to initial max values if no specific range is selected
+                                myChart.setOption({
+                                    yAxis: [{
+                                        max: maxWastewater  // Initial max value computed during data load
+                                    }, {
+                                        max: maxInfections  // Initial max value computed during data load
+                                    }]
+                                });
+                                return;  // Exit the function after resetting
+                            }
+                            // Get the data zoom information
+                            var dataZoom = params.batch[0];
+                            var startInd = dataZoom.startValue;
+                            var endInd = dataZoom.endValue;
+
+                            // Access the full datasets from the series for both wastewater and infections
+                            let wastewaterData = myChart.getModel().getSeries()[0].option.data;
+                            let infectionData = myChart.getModel().getSeries()[1].option.data;
+
+                            // Slice the data arrays from startInd to endInd + 1 to include the end index
+                            let zoomedWastewaterData = wastewaterData.slice(startInd, endInd + 1);
+                            let zoomedInfectionData = infectionData.slice(startInd, endInd + 1);
+
+                            // Calculate the maximum values of Wastewater and Infections in the zoomed range
+                            let visibleMaxWastewater = Math.max(...zoomedWastewaterData);
+                            let visibleMaxInfections = Math.max(...zoomedInfectionData);
+
+                            let adjustedMaxInfections = visibleMaxWastewater * yAxisRatio;
+                            let adjustedMaxWastewater = visibleMaxInfections / yAxisRatio;
+
+                            if (adjustedMaxInfections < visibleMaxInfections) {
+                                adjustedMaxInfections = visibleMaxInfections;
+                                visibleMaxWastewater = adjustedMaxWastewater
+                            }
+
+                            // Update the chart options to adjust the y-axis scales
+                            myChart.setOption({
+                                yAxis: [{
+                                    max: roundToTwoSignificantDigits(visibleMaxWastewater)
+                                }, {
+                                    max: roundToTwoSignificantDigits(adjustedMaxInfections)
+                                }]
+                            });
+                        } catch (error) {
+                            console.error("Error during dataZoom:", error);
+                        }
+                    });
+
+                }).catch(err => {
+                    console.log(err);   
+                    
+
+                 });
+        }
+      function updateRegionsAndMeasures(data) {
+          let regions = [...new Set(data.map(item => item.Region))];
+          $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+          let measures = [...new Set(data.map(item => item.Measure))];
+          measures = measures.filter(measure => measure != null);
+         
+      }
+      function roundToTwoSignificantDigits(num) {
+        if (num === 0) return 0;  // Handle zero case directly
+
+        // Calculate the scale based on the logarithm of the absolute value
+        let scale = Math.floor(Math.log10(Math.abs(num))) + 1 - 2;
+
+        // Scale the number, round it, and scale back
+        let scaledNum = Math.round(num * Math.pow(10, -scale)) * Math.pow(10, scale);
+        
+        return scaledNum;
+    }
+
+      function loadData() {
+          fetch(`./${$("#sources").val()}_ww.json`)
+          .then(response => response.json())
+          .then(data => {
+              updateRegionsAndMeasures(data);
+              updateData();
+          }).catch(err => {
+              console.log(err);
+          });
+      }
+      loadData();
+      $("#sources").on("change", function() {
+          loadData();
+      });
+      $("#sources, #regions, #measuresInput").on("change", function() {
+          updateData();
+      });
+  </script>
+
+</body>
+</html>
