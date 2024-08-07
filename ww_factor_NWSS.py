@@ -212,6 +212,8 @@ for date, row in nationwide_data_filtered.iterrows():
 
 # Concatenate nationwide data from Biobot and NWSS for Joe
 joe_biobot_nationwide_data = biobot_data[biobot_data['Region'] == 'Nationwide']
+joe_biobot_nationwide_data['Source'] = 'Biobot'
+joe_biobot_nationwide_data = joe_biobot_nationwide_data[['Source', 'Region', 'Date', 'Measure', 'Value']]
 joe_nwss_nationwide_data = pd.DataFrame(final_rows)
 joe_nationwide_data = pd.concat([joe_biobot_nationwide_data, joe_nwss_nationwide_data], ignore_index=True)
 joe_nationwide_data.to_csv('Nationwide_Joe.csv', index=False)
@@ -247,3 +249,5 @@ final_data.to_csv('NWSS_wwf.csv', index=False)
 final_data.to_json('NWSS_wwf.json', orient='records')
 
 print("Final dataset generated and saved.")
+
+
