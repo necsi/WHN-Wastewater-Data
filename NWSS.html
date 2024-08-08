@@ -40,7 +40,7 @@
             var selected_source = $('#sources').val();
             var selected_region = $('#regions').val();
             var selected_measures = measures;
-            fetch(`./${selected_source}_ww.json`)
+            fetch(`./${selected_source}_wwf.json`)
                 .then(response => response.json())
                 .then(data => {
                     var series = [];
@@ -75,12 +75,32 @@
                             data: valueData,
                             yAxisIndex: yAxisIndex,
                             showSymbol: false,
-                            // markArea: {
-                            //     data: [
-                            //         [{ name: 'Start of 1st Adjustment', xAxis: '2021-12-17' }, { xAxis: '2022-01-16' }],
-                            //         [{ name: 'Start of 2nd Adjustment', xAxis: '2022-08-01' }, { xAxis: '2022-08-31' }]
-                            //     ]
-                            // }
+                            ...(selected_source === 'NWSS' && {
+                                markLine: {
+                                    data: [{
+                                        xAxis: labels[labels.length - 14],
+                                        lineStyle: {
+                                            type: 'dashed',
+                                            color: 'red'
+                                        },
+                                        label: {
+                                            formatter: 'Less reliable period starts',
+                                            position: 'end',
+                                            color: 'red'
+                                        }
+                                    }]
+                                },
+                                markArea: {
+                                    itemStyle: {
+                                        color: 'rgba(255, 0, 0, 0.1)'
+                                    },
+                                    data: [[{
+                                        xAxis: labels[labels.length - 14]
+                                    }, {
+                                        xAxis: labels[labels.length - 1]
+                                    }]]
+                                }
+                            })
                         });
                         legends.push(label);
                     });
@@ -91,7 +111,6 @@
                     let yAxisRatio = maxInfections / maxWastewater;
 
                     console.log("Initial max values and ratio:", maxWastewater, maxInfections, yAxisRatio);
-
 
                     myChart.setOption({
                         tooltip: {
@@ -213,7 +232,7 @@
     }
 
       function loadData() {
-          fetch(`./${$("#sources").val()}_ww.json`)
+          fetch(`./${$("#sources").val()}_wwf.json`)
           .then(response => response.json())
           .then(data => {
               updateRegionsAndMeasures(data);
@@ -233,3 +252,4 @@
 
 </body>
 </html>
+``
