@@ -43,17 +43,35 @@ nwss_data['gc/capita/day'] = pd.to_numeric(nwss_data['gc/capita/day'], errors='c
 nwss_data['Population'] = pd.to_numeric(nwss_data['Population'], errors='coerce')
 nwss_data['gc/capita/day'] = nwss_data['gc/capita/day'].clip(lower=0)
 
-# Interpolate data for each treatment plant
-def reindex_and_interpolate(df):
-    full_date_range = pd.date_range(start=df['Date'].min(), end=df['Date'].max())
-    df = df.set_index('Date').reindex(full_date_range).interpolate(method='linear').reset_index()
+# Find the overall most recent date across all treatment plants
+overall_most_recent_date = nwss_data['Date'].max()
+
+def reindex_and_interpolate(df, overall_most_recent_date):
+    # Determine the most recent date for this treatment plant
+    last_reported_date = df['Date'].max()
+
+    # Define a two-week threshold
+    two_weeks = timedelta(weeks=2)
+
+    # Check if the last reported date is within two weeks of the overall most recent date
+    if overall_most_recent_date - last_reported_date <= two_weeks:
+        # Extend the data to the overall most recent date by repeating the last value
+        extended_date_range = pd.date_range(start=df['Date'].min(), end=overall_most_recent_date)
+    else:
+        # Otherwise, just use the normal date range
+        extended_date_range = pd.date_range(start=df['Date'].min(), end=df['Date'].max())
+
+    # Reindex and interpolate
+    df = df.set_index('Date').reindex(extended_date_range).interpolate(method='linear').reset_index()
     df['key_plot_id'] = df['key_plot_id'].fillna(method='ffill')
     df['State'] = df['State'].fillna(method='ffill')
     df['Population'] = df['Population'].fillna(method='ffill')
     df.columns = ['Date'] + list(df.columns[1:])
+    
     return df
 
-nwss_data_interpolated = nwss_data.groupby('key_plot_id').apply(reindex_and_interpolate).reset_index(drop=True)
+# Apply the modified interpolation function, passing the overall most recent date
+nwss_data_interpolated = nwss_data.groupby('key_plot_id').apply(lambda df: reindex_and_interpolate(df, overall_most_recent_date)).reset_index(drop=True)
 
 # Aggregate data by state
 state_aggregated = nwss_data_interpolated.groupby(['State', 'Date']).apply(
@@ -249,5 +267,3 @@ final_data.to_csv('NWSS_wwf.csv', index=False)
 final_data.to_json('NWSS_wwf.json', orient='records')
 
 print("Final dataset generated and saved.")
-
-
