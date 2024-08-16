@@ -183,6 +183,69 @@ if not nwss_nationwide_data.empty:
     state_conversion_factors['Nationwide'] = conv_fact_nationwide
     print(f"Nationwide Conversion Factor: {conv_fact_nationwide}")
 
+
+## Calculate conversion factor to bring biobot wastewater to NWSS wastewater metric for complete historic plot
+# Filter the Biobot data to include only the 'wastewater' measure
+biobot_data_wastewater = biobot_data[biobot_data['Measure'] == 'wastewater']
+
+# Convert state abbreviations to full names in Biobot wastewater data
+biobot_data_wastewater['State'] = biobot_data_wastewater['Region'].map(state_abbreviations)
+
+# Determine the last 4 months of available Biobot wastewater data for each state
+biobot_data_last_months_wastewater = biobot_data_wastewater.groupby('State').apply(lambda x: filter_dates(x.name, x)).reset_index(drop=True)
+
+# Calculate conversion factors for each state based on wastewater data
+state_conversion_factors_wastewater = {}
+for state, group in biobot_data_last_months_wastewater.groupby('State'):
+    nwss_state_data = merged_data[(merged_data['State'] == state) & (merged_data['Date'].isin(group['Date']))]
+    if not nwss_state_data.empty:
+        merged_state_data = pd.merge(nwss_state_data, group, left_on='Date', right_on='Date')
+        merged_state_data['NWSS/Biobot_wastewater'] = merged_state_data['Smoothed_gc/capita/day'] / merged_state_data['Value']
+        conv_fact_wastewater = merged_state_data['NWSS/Biobot_wastewater'].mean()
+        state_conversion_factors_wastewater[state] = conv_fact_wastewater
+        print(f"State: {state}, Wastewater Conversion Factor: {conv_fact_wastewater}")
+
+# Calculate conversion factor for Nationwide based on wastewater data
+biobot_nationwide_last_4_months_wastewater = biobot_data_wastewater[
+    (biobot_data_wastewater['Region'] == 'Nationwide') & 
+    (biobot_data_wastewater['Date'] > (biobot_data_wastewater['Date'].max() - pd.DateOffset(months=4)))
+]
+
+nwss_nationwide_data = merged_data[
+    (merged_data['State'] == 'Nationwide') & 
+    (merged_data['Date'].isin(biobot_nationwide_last_4_months_wastewater['Date']))
+]
+
+if not nwss_nationwide_data.empty:
+    merged_nationwide_data = pd.merge(
+        nwss_nationwide_data, 
+        biobot_nationwide_last_4_months_wastewater, 
+        left_on='Date', 
+        right_on='Date'
+    )
+    merged_nationwide_data['NWSS/Biobot_wastewater'] = (
+        merged_nationwide_data['Smoothed_gc/capita/day'] / merged_nationwide_data['Value']
+    )
+    conv_fact_nationwide_wastewater = merged_nationwide_data['NWSS/Biobot_wastewater'].mean()
+    state_conversion_factors_wastewater['Nationwide'] = conv_fact_nationwide_wastewater
+    print(f"Nationwide Wastewater Conversion Factor: {conv_fact_nationwide_wastewater}")
+
+
+
+# Apply the mapping to the 'Region' column
+biobot_data['Region'] = biobot_data['Region'].map(state_abbreviations).fillna(biobot_data['Region'])
+
+# Step 2: Replace 'Value' for 'wastewater' measure using the conversion factors
+def apply_conversion(row):
+    if row['Measure'] == 'wastewater':
+        conversion_factor = state_conversion_factors_wastewater.get(row['Region'], 1)  # Default to 1 if no factor found
+        return row['Value'] * conversion_factor
+    return row['Value']
+
+# Apply the conversion to the 'Value' column
+biobot_data['Value'] = biobot_data.apply(apply_conversion, axis=1)
+
+
 # Filter states based on data quality criteria
 filtered_states = []
 for state, group in state_aggregated_with_full_population.groupby('State'):
@@ -214,14 +277,14 @@ nationwide_data_filtered = nationwide_data[nationwide_data['Date'] > last_date_b
 
 for date, row in nationwide_data_filtered.iterrows():
     final_rows.append({
-        'Source': 'NWSS',
+        'Country': 'United_States',
         'Region': 'Nationwide',
         'Date': row['Date'],
         'Measure': 'wastewater',
         'Value': row['Smoothed_gc/capita/day']
     })
     final_rows.append({
-        'Source': 'NWSS',
+        'Country': 'United_States',
         'Region': 'Nationwide',
         'Date': row['Date'],
         'Measure': 'inf',
@@ -230,8 +293,6 @@ for date, row in nationwide_data_filtered.iterrows():
 
 # Concatenate nationwide data from Biobot and NWSS for Joe
 joe_biobot_nationwide_data = biobot_data[biobot_data['Region'] == 'Nationwide']
-joe_biobot_nationwide_data['Source'] = 'Biobot'
-joe_biobot_nationwide_data = joe_biobot_nationwide_data[['Source', 'Region', 'Date', 'Measure', 'Value']]
 joe_nwss_nationwide_data = pd.DataFrame(final_rows)
 joe_nationwide_data = pd.concat([joe_biobot_nationwide_data, joe_nwss_nationwide_data], ignore_index=True)
 joe_nationwide_data.to_csv('Nationwide_Joe.csv', index=False)
@@ -245,25 +306,29 @@ for state in filtered_states:
     
     for date, row in state_data_filtered.iterrows():
         final_rows.append({
-            'Source': 'NWSS',
+            'Country': 'United_States',
             'Region': state,
             'Date': row['Date'],
             'Measure': 'wastewater',
             'Value': row['Smoothed_gc/capita/day']
         })
         final_rows.append({
-            'Source': 'NWSS',
+            'Country': 'United_States',
             'Region': state,
             'Date': row['Date'],
             'Measure': 'inf',
             'Value': row['Smoothed_gc/capita/day'] / state_conversion_factors[state]
         })
 
+# Filter biobot_data to only include data from states in filtered_states
+biobot_data_filtered = biobot_data[biobot_data['Region'].isin(filtered_states + ['Nationwide'])]
+
 # Convert final rows to DataFrame
 final_data = pd.DataFrame(final_rows)
+final_merged_data = pd.concat([biobot_data_filtered, final_data], ignore_index=True)
 
 # Save the final dataset to CSV and JSON
-final_data.to_csv('NWSS_wwf.csv', index=False)
-final_data.to_json('NWSS_wwf.json', orient='records')
+final_merged_data.to_csv('United_States_wwa.csv', index=False)
+final_merged_data.to_json('United_States_wwa.json', orient='records')
 
 print("Final dataset generated and saved.")
