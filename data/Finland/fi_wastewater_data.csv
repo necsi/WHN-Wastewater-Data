@@ -1,4 +1,5 @@
 "Date of sample","Treatment plant","Location of treatment plant","Number of residents","Coronavirus result from the sample","Uncertainties","Inflow","Normalized RNA count using the DNA standard","Normalized RNA count using the RNA standard"
+"2024-08-12","Viikinmäki","Helsinki","860000","detected, and above the LOQ","","229721","","280945"
 "2024-07-29","Blominmäki","Espoo","390000","detected, and above the LOQ","","70955","","41072"
 "2024-07-29","Viikinmäki","Helsinki","860000","detected, and above the LOQ","","194263","","131671"
 "2024-07-29","Kuhasalo","Joensuu","98000","detected, and above the LOQ","","13622","","97171"
