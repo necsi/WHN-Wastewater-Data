@@ -26,7 +26,7 @@ df_en['Date'] = pd.to_datetime(df_en['Date'])
 
 infections = []
 for index, row in df_en.iterrows():
-    infection_level = row['loess_vorhersage'] * 1.7360232142524559 # Conversion factor based on IHME and RKI data from mid to end 2022 (see Germany_IHME_conversion_factor.py)
+    infection_level = row['loess_vorhersage'] / 1.7360232142524559 # Conversion factor based on IHME and RKI data from mid to end 2022 (see Germany_IHME_conversion_factor.py)
     infections.append(infection_level)
 
 df_en = df_en.assign(estimated_infections=infections)
