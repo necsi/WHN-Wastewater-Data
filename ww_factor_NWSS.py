@@ -291,12 +291,6 @@ for date, row in nationwide_data_filtered.iterrows():
         'Value': row['Smoothed_gc/capita/day'] / state_conversion_factors['Nationwide']
     })
 
-# Concatenate nationwide data from Biobot and NWSS for Joe
-joe_biobot_nationwide_data = biobot_data[biobot_data['Region'] == 'Nationwide']
-joe_nwss_nationwide_data = pd.DataFrame(final_rows)
-joe_nationwide_data = pd.concat([joe_biobot_nationwide_data, joe_nwss_nationwide_data], ignore_index=True)
-joe_nationwide_data.to_csv('Nationwide_Joe.csv', index=False)
-
 
 # Process each filtered state
 for state in filtered_states:
@@ -330,5 +324,55 @@ final_merged_data = pd.concat([biobot_data_filtered, final_data], ignore_index=T
 # Save the final dataset to CSV and JSON
 final_merged_data.to_csv('United_States_wwa.csv', index=False)
 final_merged_data.to_json('United_States_wwa.json', orient='records')
+
+## For Joe (MAPS)
+# Step 1: Keep only rows where "Measure" is "inf"
+df_inf = final_merged_data[final_merged_data['Measure'] == 'inf'].copy()
+
+# Step 2: Remove the "Country" and "Measure" columns
+df_inf = df_inf.drop(columns=['Country', 'Measure'])
+
+# Step 3: Check which regions (states and nationwide) are in the dataset
+existing_regions = df_inf['Region'].unique()
+
+# Define the nationwide population
+nationwide_population = sum(state_population_estimates.values())
+
+# List of two-letter state abbreviations
+state_abbreviations2 = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+    'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+    'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS',
+    'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD', 'Massachusetts': 'MA',
+    'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO', 'Montana': 'MT',
+    'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ', 'New Mexico': 'NM',
+    'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH', 'Oklahoma': 'OK',
+    'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+    'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+    'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+}
+
+# Step 4: For regions not in dataset, calculate based on nationwide total and state population proportion
+nationwide_data = df_inf[df_inf['Region'] == 'Nationwide'].copy()
+for state, pop in state_population_estimates.items():
+    if state not in existing_regions:
+        state_infections = nationwide_data['Value'] * (pop / nationwide_population)
+        state_abbreviation2 = state_abbreviations2[state]
+        new_state_data = pd.DataFrame({
+            'Date': nationwide_data['Date'],
+            'Region': state_abbreviation2,
+            'Value': state_infections
+        })
+        df_inf = pd.concat([df_inf, new_state_data])
+
+# Step 5: Convert states to two-letter abbreviations where necessary
+df_inf['Region'] = df_inf['Region'].replace(state_abbreviations2)
+
+# Step 6: Reorder the CSV so that "Nationwide" comes first, followed by states, one column per region
+df_pivot = df_inf.pivot(index='Date', columns='Region', values='Value')
+df_pivot = df_pivot[['Nationwide'] + sorted([col for col in df_pivot.columns if col != 'Nationwide'])]
+
+# Step 7: Save the dataset for Joe
+df_pivot.to_csv('Joe_EstimatedInfections.csv')
 
 print("Final dataset generated and saved.")
