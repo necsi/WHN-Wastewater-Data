@@ -41,7 +41,22 @@ pop_data = pop_data.drop_duplicates()
 nwss_data = nwss_data.merge(pop_data, how='left', on=['key_plot_id', 'Date'])
 nwss_data['gc/capita/day'] = pd.to_numeric(nwss_data['gc/capita/day'], errors='coerce')
 nwss_data['Population'] = pd.to_numeric(nwss_data['Population'], errors='coerce')
+
+# Remove negative values
 nwss_data['gc/capita/day'] = nwss_data['gc/capita/day'].clip(lower=0)
+
+# Step to identify outliers based on comparison with surrounding values
+nwss_data['rolling_median'] = nwss_data.groupby('key_plot_id')['gc/capita/day'].transform(lambda x: x.rolling(window=3, center=True).median())
+
+# Define an outlier threshold
+threshold_factor = 1000
+nwss_data['is_outlier'] = (nwss_data['gc/capita/day'] > (threshold_factor * nwss_data['rolling_median']))
+
+# Filter out outliers
+nwss_data = nwss_data[~nwss_data['is_outlier']]
+
+# Now drop the 'is_outlier' and 'rolling_median' columns
+nwss_data = nwss_data.drop(columns=['is_outlier', 'rolling_median'])
 
 # Find the overall most recent date across all treatment plants
 overall_most_recent_date = nwss_data['Date'].max()
