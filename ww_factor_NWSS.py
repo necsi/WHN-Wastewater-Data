@@ -49,7 +49,7 @@ nwss_data['gc/capita/day'] = nwss_data['gc/capita/day'].clip(lower=0)
 nwss_data['rolling_median'] = nwss_data.groupby('key_plot_id')['gc/capita/day'].transform(lambda x: x.rolling(window=3, center=True).median())
 
 # Define an outlier threshold
-threshold_factor = 1000
+threshold_factor = 10
 nwss_data['is_outlier'] = (nwss_data['gc/capita/day'] > (threshold_factor * nwss_data['rolling_median']))
 
 # Filter out outliers
