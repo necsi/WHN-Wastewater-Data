@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <title>Estimated Infections from Wastewater</title>
+</head>
+<body>
+  <select id="countries"></select>
+  <select id="regions"></select>
+  <label>
+    <input type="checkbox" id="showWastewater"> Show Wastewater Graph
+  </label>
+  <style>
+    #main, html, body {
+      width: 100%;
+    }
+    #main {
+      height: 400px;
+    }
+  </style>
+  <div id="main"></div>
+  
+  <script>
+    var countries = ['United_States'];
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+
+    $("#countries").html(countries.map(country => `<option value="${country}">${country}</option>`).join(""));
+
+    // Function to dynamically update regions and measures based on the data
+    function updateRegionsAndMeasures(data) {
+      let regions = [...new Set(data.map(item => item.Region))];
+      $("#regions").html(regions.map(region => `<option value="${region}">${region}</option>`).join(""));
+    }
+
+    // Helper function to round numbers to two significant digits
+    function roundToTwoSignificantDigits(num) {
+      if (num === 0) return 0;
+      let scale = Math.floor(Math.log10(Math.abs(num))) + 1 - 2;
+      return Math.round(num * Math.pow(10, -scale)) * Math.pow(10, scale);
+    }
+
+    // Main function to load data based on selected country
+    function loadData() {
+      fetch(`./${$("#countries").val()}_wwb.json`)
+        .then(response => response.json())
+        .then(data => {
+          updateRegionsAndMeasures(data); // Populate the regions dropdown
+          updateData(); // Update chart with the selected region data
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
+    function updateData() {
+      var selected_country = $('#countries').val();
+      var selected_region = $('#regions').val();
+      var showWastewater = $('#showWastewater').is(':checked');
+
+      Promise.all([
+        fetch(`./${selected_country}_wwb.json`).then(response => response.json()),
+        fetch(`./${selected_country}_min_wwb.json`).then(response => response.json())
+      ]).then(([maxData, minData]) => {
+        
+        var series = [];
+        var labels = [];
+        var legends = [];
+
+        // Filter and display Infection data by default
+        ['inf'].forEach((measure) => {
+          let filteredMaxData = maxData.filter(item => item.Region === selected_region && item.Measure === measure);
+          let filteredMinData = minData.filter(item => item.Region === selected_region && item.Measure === measure);
+
+          let maxTimeData = filteredMaxData.map(item => new Date(item.Date).toISOString().split('T')[0]);
+          let minTimeData = filteredMinData.map(item => new Date(item.Date).toISOString().split('T')[0]);
+
+          let maxValueData = filteredMaxData.map(item => item.Value);
+          let minValueData = filteredMinData.map(item => item.Value);
+
+          labels = [...new Set([...labels, ...maxTimeData])].sort();
+
+          // Infection min and max series with specified shades of red
+          series.push(
+            {
+              name: 'Infections Min',
+              type: 'line',
+              data: minValueData,
+              yAxisIndex: 1,
+              showSymbol: false,
+              lineStyle: { color: '#FFB6C1', width: 2 },  // Light red for line
+              areaStyle: { opacity: 0.2, color: '#FFB6C1' },
+              itemStyle: { color: '#FFB6C1' }  // Marker color for legend and hover
+            },
+            {
+              name: 'Infections Max',
+              type: 'line',
+              data: maxValueData,
+              yAxisIndex: 1,
+              showSymbol: false,
+              lineStyle: { color: '#FF4500', width: 3 },  // Darker red for stronger line
+              areaStyle: { opacity: 0.2, color: '#FF4500' },
+              itemStyle: { color: '#FF4500' },  // Marker color for legend and hover
+              markLine: selected_country === 'United_States' ? {
+                data: [{
+                  xAxis: labels[labels.length - 14],
+                  lineStyle: { type: 'dashed', color: 'orange' },
+                  label: { formatter: ' \npreliminary estimate', position: 'start', color: 'orange' }
+                }]
+              } : null,
+              markArea: selected_country === 'United_States' ? {
+                itemStyle: { color: 'rgba(255, 165, 0, 0.1)' },
+                data: [[{ xAxis: labels[labels.length - 14] }, { xAxis: labels[labels.length - 1] }]]
+              } : null
+            }
+          );
+          legends.push('Infections Min', 'Infections Max');
+        });
+
+        // Optionally add Wastewater data if selected
+        if (showWastewater) {
+          let wastewaterMaxData = maxData.filter(item => item.Region === selected_region && item.Measure === 'wastewater');
+          let wastewaterMaxValueData = wastewaterMaxData.map(item => item.Value);
+
+          series.push({
+            name: 'Wastewater',
+            type: 'line',
+            data: wastewaterMaxValueData,
+            yAxisIndex: 0,
+            showSymbol: false,
+            lineStyle: { color: '#4682B4', width: 2 },  // Blue for Wastewater line
+            areaStyle: { opacity: 0.2, color: '#4682B4' },
+            itemStyle: { color: '#4682B4' }  // Marker color for legend and hover
+          });
+          legends.push('Wastewater');
+        }
+
+        // Set the chart options
+        myChart.setOption({
+          tooltip: {
+            trigger: 'axis',
+            formatter: function(params) {
+              var result = params[0].axisValueLabel + '<br>';
+              params.forEach(function(item) {
+                result += item.marker + ' ' + item.seriesName + ': ' + Math.round(item.data) + '<br>';
+              });
+              return result;
+            }
+          },
+          legend: { data: legends, textStyle: { color: '#000' } },
+          toolbox: {
+            show: true,
+            feature: {
+              dataZoom: { yAxisIndex: 'none' },
+              dataView: { readOnly: false },
+              magicType: { type: ['line', 'bar'] },
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+          xAxis: { type: 'category', data: labels },
+          yAxis: [
+            {
+              type: 'value',
+              name: showWastewater ? 'Wastewater (copies/capita)' : '', // Dynamically set title
+              show: showWastewater // Only show axis if wastewater is displayed
+            },
+            {
+              type: 'value',
+              name: 'New Infections'
+            }
+          ],
+          series: series
+        });
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+
+    // Initial load and event listeners
+    loadData();
+    $("#countries").on("change", function() {
+      loadData();
+    });
+    $("#regions, #showWastewater").on("change", function() {
+      updateData();
+    });
+  </script>
+</body>
+</html>
