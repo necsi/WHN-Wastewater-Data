@@ -37,6 +37,7 @@ jobs:
     - name: Process Data
       run: |
         python ww_factor_NWSS.py
+        python ww_factor_NWSS_min.py
         python ww_variants_CDC.py
         python Joe_variant_infections.py
         #python ww_factor_US_states.py
