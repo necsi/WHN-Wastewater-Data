@@ -337,8 +337,8 @@ final_data = pd.DataFrame(final_rows)
 final_merged_data = pd.concat([biobot_data_filtered, final_data], ignore_index=True)
 
 # Save the final dataset to CSV and JSON
-final_merged_data.to_csv('United_States_wwa.csv', index=False)
-final_merged_data.to_json('United_States_wwa.json', orient='records')
+final_merged_data.to_csv('United_States_wwb.csv', index=False)
+final_merged_data.to_json('United_States_wwb.json', orient='records')
 
 ## For Joe (MAPS)
 # Step 1: Keep only rows where "Measure" is "inf"
