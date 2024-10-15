@@ -35,6 +35,7 @@ hhs_region_mapping = {
 
 # Extract variant columns from the nationwide variant proportions
 variant_columns = nationwide_variant_proportions.columns[1:]
+variant_columns = [col for col in variant_columns if col != 'NA']
 
 # Define a function to process data for each state
 def process_state_data(state, estimated_infections, variant_proportions, nationwide_proportions):
