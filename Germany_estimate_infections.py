@@ -15,6 +15,8 @@ def round_to_two_significant_digits(num):
         # Round the number
         return round(num, round_digits)
 
+# Look at typ SARS-CoV-2 only
+df = df[df['typ'] == 'SARS-CoV-2']
 # Interpolate missing values
 df_inter = df.interpolate(method='linear')
 # Select necessary columns
