@@ -28,7 +28,7 @@ nwss_data.columns = ['Date', 'key_plot_id', 'gc/capita/day']
 
 # Load population data
 client = Socrata("data.cdc.gov", None)
-pop_data = client.get("2ew6-ywp6", limit=200000000, timeout=15)
+pop_data = client.get("2ew6-ywp6", limit=20000000)
 pop_data = pd.DataFrame.from_records(pop_data)
 
 # Select only the columns of interest
