@@ -1,10 +1,10 @@
 name: Update US Wastewater data (conversion factor approach)
 
 on:  # yamllint disable-line rule:truthy 
-  #push:
-    #branches: [main]
+  push:
+    branches: [main]
   schedule:
-    - cron: '57 09 * * *'
+    - cron: '05 20 * * *'
 
 jobs:
   build:
