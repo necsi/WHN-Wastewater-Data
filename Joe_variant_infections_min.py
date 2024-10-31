@@ -113,7 +113,7 @@ for region, variant_proportions in hhs_variant_proportions_files.items():
         state_files[state] = state_data_final
         
         # Save to CSV
-        state_data_final.to_csv(f"{output_dir}/{state}_variant_infections.csv", index=False)
+        state_data_final.to_csv(f"{output_dir}/{state}_variant_infections_min.csv", index=False)
 
 # Process nationwide data
 nationwide_data = process_state_data("US", estimated_infections, nationwide_variant_proportions, nationwide_variant_proportions)
