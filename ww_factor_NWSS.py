@@ -47,7 +47,7 @@ nwss_data['gc/capita/day'] = nwss_data['gc/capita/day'].clip(lower=0)
 
 # Test Jan 18 2025 regarding 5 outlier plants in Erie County, NY
 # Define the list of outlier treatment plant IDs
-outlier_plants = ['NWSS_ny_1012', 'NWSS_ny_1013', 'NWSS_ny_1000', 'NWSS_ny_2178', 'NWSS_ny_998']
+outlier_plants = ['NWSS_ny_1012_Treatment plant_raw wastewater', 'NWSS_ny_1013_Treatment plant_raw wastewater', 'NWSS_ny_1000_Treatment plant_raw wastewater', 'NWSS_ny_2178_Treatment plant_raw wastewater', 'NWSS_ny_998_Treatment plant_raw wastewater']
 
 # Filter out the outliers from the dataset
 nwss_data = nwss_data[~nwss_data['key_plot_id'].isin(outlier_plants)]
