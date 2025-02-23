@@ -42101,40 +42101,42 @@ United_States,Nationwide,2025-01-31,wastewater,84963259.00290619
 United_States,Nationwide,2025-01-31,inf,520690.3776738207
 United_States,Nationwide,2025-02-01,wastewater,89128294.5774891
 United_States,Nationwide,2025-02-01,inf,546215.4572412169
-United_States,Nationwide,2025-02-02,wastewater,96007364.95706546
-United_States,Nationwide,2025-02-02,inf,588373.2769390688
-United_States,Nationwide,2025-02-03,wastewater,100049938.25902271
-United_States,Nationwide,2025-02-03,inf,613147.8564934881
-United_States,Nationwide,2025-02-04,wastewater,101594491.64662042
-United_States,Nationwide,2025-02-04,inf,622613.5254916385
-United_States,Nationwide,2025-02-05,wastewater,101961594.54511736
-United_States,Nationwide,2025-02-05,inf,624863.2855538906
-United_States,Nationwide,2025-02-06,wastewater,101152320.85417244
-United_States,Nationwide,2025-02-06,inf,619903.7179863943
-United_States,Nationwide,2025-02-07,wastewater,98571434.66573349
-United_States,Nationwide,2025-02-07,inf,604086.9682528953
-United_States,Nationwide,2025-02-08,wastewater,93881213.53736699
-United_States,Nationwide,2025-02-08,inf,575343.3320110304
-United_States,Nationwide,2025-02-09,wastewater,86582683.27708285
-United_States,Nationwide,2025-02-09,inf,530614.8867714102
-United_States,Nationwide,2025-02-10,wastewater,81638000.68281846
-United_States,Nationwide,2025-02-10,inf,500311.8042661049
-United_States,Nationwide,2025-02-11,wastewater,79077347.95977013
-United_States,Nationwide,2025-02-11,inf,484619.05366893293
-United_States,Nationwide,2025-02-12,wastewater,77099225.0500532
-United_States,Nationwide,2025-02-12,inf,472496.2893466449
-United_States,Nationwide,2025-02-13,wastewater,75687384.22460404
-United_States,Nationwide,2025-02-13,inf,463843.9384217199
-United_States,Nationwide,2025-02-14,wastewater,75067790.7241749
-United_States,Nationwide,2025-02-14,inf,460046.8103745053
-United_States,Nationwide,2025-02-15,wastewater,75332268.28266272
-United_States,Nationwide,2025-02-15,inf,461667.6394414619
-United_States,Nationwide,2025-02-16,wastewater,75215876.7771609
-United_States,Nationwide,2025-02-16,inf,460954.34362784796
-United_States,Nationwide,2025-02-17,wastewater,75074704.20712677
-United_States,Nationwide,2025-02-17,inf,460089.1790888354
-United_States,Nationwide,2025-02-18,wastewater,74999600.75411116
-United_States,Nationwide,2025-02-18,inf,459628.9137250272
+United_States,Nationwide,2025-02-02,wastewater,96374620.09489691
+United_States,Nationwide,2025-02-02,inf,590623.9699876201
+United_States,Nationwide,2025-02-03,wastewater,100724614.80696635
+United_States,Nationwide,2025-02-03,inf,617282.5564882755
+United_States,Nationwide,2025-02-04,wastewater,102514128.69137673
+United_States,Nationwide,2025-02-04,inf,628249.4458385806
+United_States,Nationwide,2025-02-05,wastewater,103110857.45728497
+United_States,Nationwide,2025-02-05,inf,631906.4492319999
+United_States,Nationwide,2025-02-06,wastewater,102516408.97674644
+United_States,Nationwide,2025-02-06,inf,628263.4203808039
+United_States,Nationwide,2025-02-07,wastewater,100129951.3914367
+United_States,Nationwide,2025-02-07,inf,613638.210425581
+United_States,Nationwide,2025-02-08,wastewater,95637565.72785293
+United_States,Nationwide,2025-02-08,inf,586106.9926347488
+United_States,Nationwide,2025-02-09,wastewater,88220016.81663512
+United_States,Nationwide,2025-02-09,inf,540649.1513357947
+United_States,Nationwide,2025-02-10,wastewater,83250094.88677642
+United_States,Nationwide,2025-02-10,inf,510191.3916284015
+United_States,Nationwide,2025-02-11,wastewater,80734157.15270257
+United_States,Nationwide,2025-02-11,inf,494772.6731807732
+United_States,Nationwide,2025-02-12,wastewater,78827738.082872
+United_States,Nationwide,2025-02-12,inf,483089.33997152455
+United_States,Nationwide,2025-02-13,wastewater,77514206.0745137
+United_States,Nationwide,2025-02-13,inf,475039.46658454277
+United_States,Nationwide,2025-02-14,wastewater,76986143.58496678
+United_States,Nationwide,2025-02-14,inf,471803.2788447556
+United_States,Nationwide,2025-02-15,wastewater,77315394.5525551
+United_States,Nationwide,2025-02-15,inf,473821.0664470081
+United_States,Nationwide,2025-02-16,wastewater,77137417.09059297
+United_States,Nationwide,2025-02-16,inf,472730.3461406776
+United_States,Nationwide,2025-02-17,wastewater,77010817.58086567
+United_States,Nationwide,2025-02-17,inf,471954.491408799
+United_States,Nationwide,2025-02-18,wastewater,76932411.81309895
+United_States,Nationwide,2025-02-18,inf,471473.9880793674
+United_States,Nationwide,2025-02-19,wastewater,76819399.99700645
+United_States,Nationwide,2025-02-19,inf,470781.4044156358
 United_States,California,2024-04-28,wastewater,13133789.764285173
 United_States,California,2024-04-28,inf,37604.283809781424
 United_States,California,2024-04-29,wastewater,13107769.3331362
@@ -42695,40 +42697,42 @@ United_States,California,2025-01-31,wastewater,22401233.59426712
 United_States,California,2025-01-31,inf,64138.55870136799
 United_States,California,2025-02-01,wastewater,20849897.23873809
 United_States,California,2025-02-01,inf,59696.81769250994
-United_States,California,2025-02-02,wastewater,19203943.827445146
-United_States,California,2025-02-02,inf,54984.171889068726
-United_States,California,2025-02-03,wastewater,17751416.039763533
-United_States,California,2025-02-03,inf,50825.336689947035
-United_States,California,2025-02-04,wastewater,16611232.144962277
-United_States,California,2025-02-04,inf,47560.79541549776
-United_States,California,2025-02-05,wastewater,15774998.914722105
-United_States,California,2025-02-05,inf,45166.516819183315
-United_States,California,2025-02-06,wastewater,15230336.096180664
-United_States,California,2025-02-06,inf,43607.05412207484
-United_States,California,2025-02-07,wastewater,13480455.239495708
-United_States,California,2025-02-07,inf,38596.846288002205
-United_States,California,2025-02-08,wastewater,13558105.135940362
-United_States,California,2025-02-08,inf,38819.17120686494
-United_States,California,2025-02-09,wastewater,13798905.795008807
-United_States,California,2025-02-09,inf,39508.62463102557
-United_States,California,2025-02-10,wastewater,14126104.420208814
-United_States,California,2025-02-10,inf,40445.45019204147
-United_States,California,2025-02-11,wastewater,14290774.509249197
-United_States,California,2025-02-11,inf,40916.92878842462
-United_States,California,2025-02-12,wastewater,14292916.06212995
-United_States,California,2025-02-12,inf,40923.060420175
-United_States,California,2025-02-13,wastewater,14143404.255911583
-United_States,California,2025-02-13,inf,40494.98257708075
-United_States,California,2025-02-14,wastewater,13931417.071420629
-United_States,California,2025-02-14,inf,39888.027052993435
-United_States,California,2025-02-15,wastewater,13533008.029591667
-United_States,California,2025-02-15,inf,38747.31390391747
-United_States,California,2025-02-16,wastewater,13244045.198118905
-United_States,California,2025-02-16,inf,37919.96395236515
-United_States,California,2025-02-17,wastewater,12804255.994743722
-United_States,California,2025-02-17,inf,36660.77233159093
-United_States,California,2025-02-18,wastewater,12370678.286985632
-United_States,California,2025-02-18,inf,35419.36528391104
+United_States,California,2025-02-02,wastewater,18859596.313465573
+United_States,California,2025-02-02,inf,53998.24612984173
+United_States,California,2025-02-03,wastewater,17051954.65213435
+United_States,California,2025-02-03,inf,48822.65924448369
+United_States,California,2025-02-04,wastewater,15562517.000840394
+United_States,California,2025-02-04,inf,44558.14480033303
+United_States,California,2025-02-05,wastewater,14382890.131264418
+United_States,California,2025-02-05,inf,41180.671550852145
+United_States,California,2025-02-06,wastewater,13498781.421083871
+United_States,California,2025-02-06,inf,38649.31727664745
+United_States,California,2025-02-07,wastewater,11398945.998308059
+United_States,California,2025-02-07,inf,32637.12973527092
+United_States,California,2025-02-08,wastewater,11141356.700497715
+United_States,California,2025-02-08,inf,31899.607570300457
+United_States,California,2025-02-09,wastewater,11422996.071040269
+United_States,California,2025-02-09,inf,32705.989202104112
+United_States,California,2025-02-10,wastewater,11804054.095931496
+United_States,California,2025-02-10,inf,33797.023425521525
+United_States,California,2025-02-11,wastewater,11991831.243883356
+United_States,California,2025-02-11,inf,34334.66147906908
+United_States,California,2025-02-12,wastewater,11986327.514895847
+United_States,California,2025-02-12,inf,34318.903362746765
+United_States,California,2025-02-13,wastewater,11800330.455489675
+United_States,California,2025-02-13,inf,33786.36200680744
+United_States,California,2025-02-14,wastewater,11585671.486545622
+United_States,California,2025-02-14,inf,33171.75670739586
+United_States,California,2025-02-15,wastewater,11261310.92890122
+United_States,California,2025-02-15,inf,32243.057018633717
+United_States,California,2025-02-16,wastewater,10819762.530493086
+United_States,California,2025-02-16,inf,30978.828521947587
+United_States,California,2025-02-17,wastewater,10400687.969360914
+United_States,California,2025-02-17,inf,29778.94646070679
+United_States,California,2025-02-18,wastewater,10029717.5746916
+United_States,California,2025-02-18,inf,28716.79484593783
+United_States,California,2025-02-19,wastewater,9742929.471332282
+United_States,California,2025-02-19,inf,27895.671512494577
 United_States,Delaware,2024-04-28,wastewater,5715079.802879566
 United_States,Delaware,2024-04-28,inf,166.04113865192906
 United_States,Delaware,2024-04-29,wastewater,6188330.695294241
@@ -43303,26 +43307,28 @@ United_States,Delaware,2025-02-07,wastewater,49617621.70920857
 United_States,Delaware,2025-02-07,inf,1441.5487954597993
 United_States,Delaware,2025-02-08,wastewater,47751451.30076076
 United_States,Delaware,2025-02-08,inf,1387.3306444934585
-United_States,Delaware,2025-02-09,wastewater,46079349.30574695
-United_States,Delaware,2025-02-09,inf,1338.7507945577906
-United_States,Delaware,2025-02-10,wastewater,44328343.35819477
-United_States,Delaware,2025-02-10,inf,1287.8785353163057
-United_States,Delaware,2025-02-11,wastewater,42508641.81029747
-United_States,Delaware,2025-02-11,inf,1235.0104516777694
-United_States,Delaware,2025-02-12,wastewater,40620244.66205504
-United_States,Delaware,2025-02-12,inf,1180.1465436421818
-United_States,Delaware,2025-02-13,wastewater,38663151.91346749
-United_States,Delaware,2025-02-13,inf,1123.286811209543
-United_States,Delaware,2025-02-14,wastewater,37882895.44300173
-United_States,Delaware,2025-02-14,inf,1100.6178936676756
-United_States,Delaware,2025-02-15,wastewater,38223653.6150322
-United_States,Delaware,2025-02-15,inf,1110.5179960005216
-United_States,Delaware,2025-02-16,wastewater,38213445.262838945
-United_States,Delaware,2025-02-16,inf,1110.2214110917553
-United_States,Delaware,2025-02-17,wastewater,38213445.262838945
-United_States,Delaware,2025-02-17,inf,1110.2214110917553
-United_States,Delaware,2025-02-18,wastewater,38213445.262838945
-United_States,Delaware,2025-02-18,inf,1110.2214110917553
+United_States,Delaware,2025-02-09,wastewater,47614712.76970218
+United_States,Delaware,2025-02-09,inf,1383.3579578158167
+United_States,Delaware,2025-02-10,wastewater,48760404.50515347
+United_States,Delaware,2025-02-10,inf,1416.6439252668026
+United_States,Delaware,2025-02-11,wastewater,51198055.14541124
+United_States,Delaware,2025-02-11,inf,1487.4653839173134
+United_States,Delaware,2025-02-12,wastewater,54927664.6904755
+United_States,Delaware,2025-02-12,inf,1595.8223337673492
+United_States,Delaware,2025-02-13,wastewater,59949233.14034627
+United_States,Delaware,2025-02-13,inf,1741.7147748169102
+United_States,Delaware,2025-02-14,wastewater,62634769.654505886
+United_States,Delaware,2025-02-14,inf,1819.738101888865
+United_States,Delaware,2025-02-15,wastewater,63055408.20888031
+United_States,Delaware,2025-02-15,inf,1831.9589819007313
+United_States,Delaware,2025-02-16,wastewater,61716401.228320226
+United_States,Delaware,2025-02-16,inf,1793.0565953403448
+United_States,Delaware,2025-02-17,wastewater,62254079.92572973
+United_States,Delaware,2025-02-17,inf,1808.6778615738938
+United_States,Delaware,2025-02-18,wastewater,61101913.79489078
+United_States,Delaware,2025-02-18,inf,1775.2037924656554
+United_States,Delaware,2025-02-19,wastewater,56992519.21461703
+United_States,Delaware,2025-02-19,inf,1655.8128865092897
 United_States,Indiana,2024-04-28,wastewater,12732754.68678453
 United_States,Indiana,2024-04-28,inf,2637.6610972182502
 United_States,Indiana,2024-04-29,wastewater,12468079.387941327
@@ -43911,12 +43917,14 @@ United_States,Indiana,2025-02-14,wastewater,56059256.72394405
 United_States,Indiana,2025-02-14,inf,11612.987467133797
 United_States,Indiana,2025-02-15,wastewater,56127229.626972295
 United_States,Indiana,2025-02-15,inf,11627.068432831555
-United_States,Indiana,2025-02-16,wastewater,56126398.17435015
-United_States,Indiana,2025-02-16,inf,11626.896192786917
-United_States,Indiana,2025-02-17,wastewater,56493388.74315701
-United_States,Indiana,2025-02-17,inf,11702.92033447501
-United_States,Indiana,2025-02-18,wastewater,56814308.56988988
-United_States,Indiana,2025-02-18,inf,11769.400665175004
+United_States,Indiana,2025-02-16,wastewater,56257128.65582723
+United_States,Indiana,2025-02-16,inf,11653.977740629081
+United_States,Indiana,2025-02-17,wastewater,56584742.543412454
+United_States,Indiana,2025-02-17,inf,11721.844783342853
+United_States,Indiana,2025-02-18,wastewater,56859749.16484984
+United_States,Indiana,2025-02-18,inf,11778.813937676416
+United_States,Indiana,2025-02-19,wastewater,57042693.07052851
+United_States,Indiana,2025-02-19,inf,11816.711787344611
 United_States,Minnesota,2023-08-06,wastewater,1109827.3664414089
 United_States,Minnesota,2023-08-06,inf,1602.6384473473329
 United_States,Minnesota,2023-08-07,wastewater,1197586.0620602823
@@ -45037,12 +45045,14 @@ United_States,Minnesota,2025-02-14,wastewater,8945805.639790839
 United_States,Minnesota,2025-02-14,inf,12918.128074995788
 United_States,Minnesota,2025-02-15,wastewater,8566872.320465235
 United_States,Minnesota,2025-02-15,inf,12370.932065152021
-United_States,Minnesota,2025-02-16,wastewater,8380045.388133812
-United_States,Minnesota,2025-02-16,inf,12101.145940023069
+United_States,Minnesota,2025-02-16,wastewater,8380045.388133811
+United_States,Minnesota,2025-02-16,inf,12101.145940023067
 United_States,Minnesota,2025-02-17,wastewater,8380045.388133812
 United_States,Minnesota,2025-02-17,inf,12101.145940023069
 United_States,Minnesota,2025-02-18,wastewater,8380045.388133811
 United_States,Minnesota,2025-02-18,inf,12101.145940023067
+United_States,Minnesota,2025-02-19,wastewater,8380045.388133811
+United_States,Minnesota,2025-02-19,inf,12101.145940023067
 United_States,Missouri,2024-04-28,wastewater,5263140.346045959
 United_States,Missouri,2024-04-28,inf,1489.155163016687
 United_States,Missouri,2024-04-29,wastewater,5166926.26433967
@@ -45603,40 +45613,42 @@ United_States,Missouri,2025-01-31,wastewater,19321420.39585001
 United_States,Missouri,2025-01-31,inf,5466.810886187362
 United_States,Missouri,2025-02-01,wastewater,19453062.883034367
 United_States,Missouri,2025-02-01,inf,5504.057867376115
-United_States,Missouri,2025-02-02,wastewater,19368514.040479537
-United_States,Missouri,2025-02-02,inf,5480.135581983859
-United_States,Missouri,2025-02-03,wastewater,18999176.601676792
-United_States,Missouri,2025-02-03,inf,5375.635090314153
-United_States,Missouri,2025-02-04,wastewater,18335079.52721833
-United_States,Missouri,2025-02-04,inf,5187.7351822455685
-United_States,Missouri,2025-02-05,wastewater,17376222.817104146
-United_States,Missouri,2025-02-05,inf,4916.435857778102
-United_States,Missouri,2025-02-06,wastewater,16122606.47133424
-United_States,Missouri,2025-02-06,inf,4561.737116911756
-United_States,Missouri,2025-02-07,wastewater,14631061.365827631
-United_States,Missouri,2025-02-07,inf,4139.718711796241
-United_States,Missouri,2025-02-08,wastewater,13127457.556829924
-United_States,Missouri,2025-02-08,inf,3714.288411997631
-United_States,Missouri,2025-02-09,wastewater,11598129.65231156
-United_States,Missouri,2025-02-09,inf,3281.5797256959327
-United_States,Missouri,2025-02-10,wastewater,10323163.737858692
-United_States,Missouri,2025-02-10,inf,2920.8403288063632
-United_States,Missouri,2025-02-11,wastewater,9312771.418845296
-United_States,Missouri,2025-02-11,inf,2634.9594972869095
-United_States,Missouri,2025-02-12,wastewater,8566952.695271373
-United_States,Missouri,2025-02-12,inf,2423.937231137573
-United_States,Missouri,2025-02-13,wastewater,8085707.567136922
-United_States,Missouri,2025-02-13,inf,2287.773530358352
-United_States,Missouri,2025-02-14,wastewater,7837131.5664683115
-United_States,Missouri,2025-02-14,inf,2217.441331241565
-United_States,Missouri,2025-02-15,wastewater,7711970.284039283
-United_States,Missouri,2025-02-15,inf,2182.0281448766978
-United_States,Missouri,2025-02-16,wastewater,7710015.930121099
-United_States,Missouri,2025-02-16,inf,2181.4751791497224
-United_States,Missouri,2025-02-17,wastewater,7710015.930121099
-United_States,Missouri,2025-02-17,inf,2181.4751791497224
-United_States,Missouri,2025-02-18,wastewater,7710015.9301211
-United_States,Missouri,2025-02-18,inf,2181.4751791497224
+United_States,Missouri,2025-02-02,wastewater,19386742.328287113
+United_States,Missouri,2025-02-02,inf,5485.29310147163
+United_States,Missouri,2025-02-03,wastewater,19033452.85284641
+United_States,Missouri,2025-02-03,inf,5385.333227365816
+United_States,Missouri,2025-02-04,wastewater,18383153.17797862
+United_States,Missouri,2025-02-04,inf,5201.3371613925865
+United_States,Missouri,2025-02-05,wastewater,17435843.30368374
+United_States,Missouri,2025-02-05,inf,4933.304903551938
+United_States,Missouri,2025-02-06,wastewater,16191523.229961766
+United_States,Missouri,2025-02-06,inf,4581.236453843871
+United_States,Missouri,2025-02-07,wastewater,14707295.224287808
+United_States,Missouri,2025-02-07,inf,4161.288352060146
+United_States,Missouri,2025-02-08,wastewater,13209958.702524247
+United_States,Missouri,2025-02-08,inf,3737.631321171199
+United_States,Missouri,2025-02-09,wastewater,11667621.752372522
+United_States,Missouri,2025-02-09,inf,3301.24184997738
+United_States,Missouri,2025-02-10,wastewater,10381810.492253045
+United_States,Missouri,2025-02-10,inf,2937.433866382486
+United_States,Missouri,2025-02-11,wastewater,9362823.391344408
+United_States,Missouri,2025-02-11,inf,2649.121223626246
+United_States,Missouri,2025-02-12,wastewater,8610660.449646613
+United_States,Missouri,2025-02-12,inf,2436.30392170866
+United_States,Missouri,2025-02-13,wastewater,8125321.66715966
+United_States,Missouri,2025-02-13,inf,2298.981960629728
+United_States,Missouri,2025-02-14,wastewater,7874631.184353829
+United_States,Missouri,2025-02-14,inf,2228.051489039718
+United_States,Missouri,2025-02-15,wastewater,7748405.232386083
+United_States,Missouri,2025-02-15,inf,2192.3370646237545
+United_States,Missouri,2025-02-16,wastewater,7746434.2539891135
+United_States,Missouri,2025-02-16,inf,2191.7793951596964
+United_States,Missouri,2025-02-17,wastewater,7746434.253989114
+United_States,Missouri,2025-02-17,inf,2191.779395159697
+United_States,Missouri,2025-02-18,wastewater,7746434.2539891135
+United_States,Missouri,2025-02-18,inf,2191.7793951596964
+United_States,Missouri,2025-02-19,wastewater,7746434.2539891135
+United_States,Missouri,2025-02-19,inf,2191.7793951596964
 United_States,Nebraska,2024-04-28,wastewater,7392554.803818621
 United_States,Nebraska,2024-04-28,inf,570.4313768608739
 United_States,Nebraska,2024-04-29,wastewater,7472178.682595971
@@ -46231,6 +46243,8 @@ United_States,Nebraska,2025-02-17,wastewater,70113451.59219782
 United_States,Nebraska,2025-02-17,inf,5410.161140441771
 United_States,Nebraska,2025-02-18,wastewater,70113451.59219782
 United_States,Nebraska,2025-02-18,inf,5410.161140441771
+United_States,Nebraska,2025-02-19,wastewater,70113451.59219784
+United_States,Nebraska,2025-02-19,inf,5410.161140441772
 United_States,Nevada,2024-04-28,wastewater,11845226.91652284
 United_States,Nevada,2024-04-28,inf,2785.5840205295844
 United_States,Nevada,2024-04-29,wastewater,11130066.838525536
@@ -46819,12 +46833,14 @@ United_States,Nevada,2025-02-14,wastewater,11870180.929089414
 United_States,Nevada,2025-02-14,inf,2791.4523334917094
 United_States,Nevada,2025-02-15,wastewater,11617847.898570618
 United_States,Nevada,2025-02-15,inf,2732.112410110039
-United_States,Nevada,2025-02-16,wastewater,11359025.6443614
-United_States,Nevada,2025-02-16,inf,2671.2464477638923
-United_States,Nevada,2025-02-17,wastewater,11102042.34808507
-United_States,Nevada,2025-02-17,inf,2610.8129441514093
-United_States,Nevada,2025-02-18,wastewater,10848277.228191294
-United_States,Nevada,2025-02-18,inf,2551.136243322838
+United_States,Nevada,2025-02-16,wastewater,11225641.318267154
+United_States,Nevada,2025-02-16,inf,2639.8791088369394
+United_States,Nevada,2025-02-17,wastewater,10989257.850354506
+United_States,Nevada,2025-02-17,inf,2584.289966005378
+United_States,Nevada,2025-02-18,wastewater,10763688.854893371
+United_States,Nevada,2025-02-18,inf,2531.244009713315
+United_States,Nevada,2025-02-19,wastewater,10566315.98386488
+United_States,Nevada,2025-02-19,inf,2484.828797957759
 United_States,New Jersey,2024-04-28,wastewater,25542822.999795645
 United_States,New Jersey,2024-04-28,inf,3857.676023175663
 United_States,New Jersey,2024-04-29,wastewater,24918812.713268496
@@ -47413,12 +47429,14 @@ United_States,New Jersey,2025-02-14,wastewater,106124532.45016184
 United_States,New Jersey,2025-02-14,inf,16027.753248221323
 United_States,New Jersey,2025-02-15,wastewater,112515445.67010713
 United_States,New Jersey,2025-02-15,inf,16992.958726682984
-United_States,New Jersey,2025-02-16,wastewater,115740981.72551723
+United_States,New Jersey,2025-02-16,wastewater,115740981.72551724
 United_States,New Jersey,2025-02-16,inf,17480.104297982747
 United_States,New Jersey,2025-02-17,wastewater,115740981.72551723
 United_States,New Jersey,2025-02-17,inf,17480.104297982747
 United_States,New Jersey,2025-02-18,wastewater,115740981.72551723
 United_States,New Jersey,2025-02-18,inf,17480.104297982747
+United_States,New Jersey,2025-02-19,wastewater,115740981.72551724
+United_States,New Jersey,2025-02-19,inf,17480.104297982747
 United_States,New York,2024-04-28,wastewater,7496108.031253496
 United_States,New York,2024-04-28,inf,15344.90692310544
 United_States,New York,2024-04-29,wastewater,6610258.214289476
@@ -47979,40 +47997,42 @@ United_States,New York,2025-01-31,wastewater,11806055.962212592
 United_States,New York,2025-01-31,inf,24167.585247411687
 United_States,New York,2025-02-01,wastewater,11821574.316571092
 United_States,New York,2025-02-01,inf,24199.35209258496
-United_States,New York,2025-02-02,wastewater,11717602.44570252
-United_States,New York,2025-02-02,inf,23986.516488502475
-United_States,New York,2025-02-03,wastewater,11232774.371455695
-United_States,New York,2025-02-03,inf,22994.049245233316
-United_States,New York,2025-02-04,wastewater,10842928.83552805
-United_States,New York,2025-02-04,inf,22196.01599407731
-United_States,New York,2025-02-05,wastewater,10544048.501245102
-United_States,New York,2025-02-05,inf,21584.19304654282
-United_States,New York,2025-02-06,wastewater,10340260.572085584
-United_States,New York,2025-02-06,inf,21167.02899394814
-United_States,New York,2025-02-07,wastewater,10231023.90344475
-United_States,New York,2025-02-07,inf,20943.416086303932
-United_States,New York,2025-02-08,wastewater,9851630.959500154
-United_States,New York,2025-02-08,inf,20166.77981214137
-United_States,New York,2025-02-09,wastewater,9415363.73009622
-United_States,New York,2025-02-09,inf,19273.719039685424
-United_States,New York,2025-02-10,wastewater,9140149.083623562
-United_States,New York,2025-02-10,inf,18710.34093515561
-United_States,New York,2025-02-11,wastewater,8795599.814168783
-United_States,New York,2025-02-11,inf,18005.03140010567
-United_States,New York,2025-02-12,wastewater,8381715.921731882
-United_States,New York,2025-02-12,inf,17157.79043453559
-United_States,New York,2025-02-13,wastewater,7898340.166184577
-United_States,New York,2025-02-13,inf,16168.296160062222
-United_States,New York,2025-02-14,wastewater,7345946.970227466
-United_States,New York,2025-02-14,inf,15037.519743610124
-United_States,New York,2025-02-15,wastewater,6637629.731365145
-United_States,New York,2025-02-15,inf,13587.559036392857
-United_States,New York,2025-02-16,wastewater,6269116.490036853
-United_States,New York,2025-02-16,inf,12833.194055987293
-United_States,New York,2025-02-17,wastewater,6269116.490036854
-United_States,New York,2025-02-17,inf,12833.194055987295
-United_States,New York,2025-02-18,wastewater,6269116.490036853
-United_States,New York,2025-02-18,inf,12833.194055987293
+United_States,New York,2025-02-02,wastewater,11732641.593161285
+United_States,New York,2025-02-02,inf,24017.302373256996
+United_States,New York,2025-02-03,wastewater,11257970.107765311
+United_States,New York,2025-02-03,inf,23045.62617380988
+United_States,New York,2025-02-04,wastewater,10878920.420898972
+United_States,New York,2025-02-04,inf,22269.69256400255
+United_States,New York,2025-02-05,wastewater,10591475.195887791
+United_States,New York,2025-02-05,inf,21681.27785534338
+United_States,New York,2025-02-06,wastewater,10399765.465497611
+United_States,New York,2025-02-06,inf,21288.838477892332
+United_States,New York,2025-02-07,wastewater,10303245.962748481
+United_States,New York,2025-02-07,inf,21091.258242952445
+United_States,New York,2025-02-08,wastewater,9938011.150185516
+United_States,New York,2025-02-08,inf,20343.604369703855
+United_States,New York,2025-02-09,wastewater,9497728.08362992
+United_States,New York,2025-02-09,inf,19442.322978354252
+United_States,New York,2025-02-10,wastewater,9219980.483849417
+United_States,New York,2025-02-10,inf,18873.759792101046
+United_States,New York,2025-02-11,wastewater,8872259.000876335
+United_States,New York,2025-02-11,inf,18161.956577801066
+United_States,New York,2025-02-12,wastewater,8454563.634710671
+United_States,New York,2025-02-12,inf,17306.91333545431
+United_States,New York,2025-02-13,wastewater,7966733.315937034
+United_States,New York,2025-02-13,inf,16308.300347935961
+United_States,New York,2025-02-14,wastewater,7409246.589631223
+United_States,New York,2025-02-14,inf,15167.097220878182
+United_States,New York,2025-02-15,wastewater,6694394.854930277
+United_States,New York,2025-02-15,inf,13703.76007484559
+United_States,New York,2025-02-16,wastewater,6322481.938837885
+United_States,New York,2025-02-16,inf,12942.4357906778
+United_States,New York,2025-02-17,wastewater,6322481.938837885
+United_States,New York,2025-02-17,inf,12942.4357906778
+United_States,New York,2025-02-18,wastewater,6322481.938837884
+United_States,New York,2025-02-18,inf,12942.435790677799
+United_States,New York,2025-02-19,wastewater,6322481.938837885
+United_States,New York,2025-02-19,inf,12942.4357906778
 United_States,North Carolina,2024-04-28,wastewater,6637619.194956939
 United_States,North Carolina,2024-04-28,inf,2524.626679271811
 United_States,North Carolina,2024-04-29,wastewater,6701383.377400057
@@ -48601,12 +48621,14 @@ United_States,North Carolina,2025-02-14,wastewater,33209968.746327747
 United_States,North Carolina,2025-02-14,inf,12631.452732097561
 United_States,North Carolina,2025-02-15,wastewater,33178265.79995495
 United_States,North Carolina,2025-02-15,inf,12619.394477191181
-United_States,North Carolina,2025-02-16,wastewater,33164050.511945754
-United_States,North Carolina,2025-02-16,inf,12613.987674796006
-United_States,North Carolina,2025-02-17,wastewater,33168914.713522755
-United_States,North Carolina,2025-02-17,inf,12615.837779888503
-United_States,North Carolina,2025-02-18,wastewater,33173587.08482334
-United_States,North Carolina,2025-02-18,inf,12617.61492209785
+United_States,North Carolina,2025-02-16,wastewater,33166428.768635504
+United_States,North Carolina,2025-02-16,inf,12614.892247672627
+United_States,North Carolina,2025-02-17,wastewater,33170878.646064628
+United_States,North Carolina,2025-02-17,inf,12616.584764062478
+United_States,North Carolina,2025-02-18,wastewater,33175009.32961347
+United_States,North Carolina,2025-02-18,inf,12618.15587466475
+United_States,North Carolina,2025-02-19,wastewater,33178581.423871815
+United_States,North Carolina,2025-02-19,inf,12619.514525138755
 United_States,Ohio,2024-04-28,wastewater,10864357.426079689
 United_States,Ohio,2024-04-28,inf,5215.166979359112
 United_States,Ohio,2024-04-29,wastewater,10774546.037247779
@@ -49167,40 +49189,42 @@ United_States,Ohio,2025-01-31,wastewater,49769599.99052017
 United_States,Ohio,2025-01-31,inf,23890.66967029372
 United_States,Ohio,2025-02-01,wastewater,46869845.07724881
 United_States,Ohio,2025-02-01,inf,22498.713802234248
-United_States,Ohio,2025-02-02,wastewater,44377385.43956745
-United_States,Ohio,2025-02-02,inf,21302.269991519923
-United_States,Ohio,2025-02-03,wastewater,42627471.75298802
-United_States,Ohio,2025-02-03,inf,20462.267061105413
-United_States,Ohio,2025-02-04,wastewater,41641149.805670165
-United_States,Ohio,2025-02-04,inf,19988.807522824613
-United_States,Ohio,2025-02-05,wastewater,41418419.597613916
-United_States,Ohio,2025-02-05,inf,19881.891376677544
-United_States,Ohio,2025-02-06,wastewater,41959281.12881925
-United_States,Ohio,2025-02-06,inf,20141.518622664193
-United_States,Ohio,2025-02-07,wastewater,42572345.00064395
-United_States,Ohio,2025-02-07,inf,20435.804822499937
-United_States,Ohio,2025-02-08,wastewater,44289298.00659555
-United_States,Ohio,2025-02-08,inf,21259.98579064958
-United_States,Ohio,2025-02-09,wastewater,46357124.581867635
-United_States,Ohio,2025-02-09,inf,22252.594966827208
-United_States,Ohio,2025-02-10,wastewater,48024448.17242497
-United_States,Ohio,2025-02-10,inf,23052.952557466484
-United_States,Ohio,2025-02-11,wastewater,49289727.2769357
-United_States,Ohio,2025-02-11,inf,23660.318602850584
-United_States,Ohio,2025-02-12,wastewater,50152961.89539982
-United_States,Ohio,2025-02-12,inf,24074.69310297951
-United_States,Ohio,2025-02-13,wastewater,50614152.027817346
-United_States,Ohio,2025-02-13,inf,24296.076057853265
-United_States,Ohio,2025-02-14,wastewater,50934358.86208106
-United_States,Ohio,2025-02-14,inf,24449.78345564272
-United_States,Ohio,2025-02-15,wastewater,51026549.999980375
-United_States,Ohio,2025-02-15,inf,24494.03753890842
-United_States,Ohio,2025-02-16,wastewater,51026549.99998037
-United_States,Ohio,2025-02-16,inf,24494.037538908415
-United_States,Ohio,2025-02-17,wastewater,51026549.999980375
-United_States,Ohio,2025-02-17,inf,24494.03753890842
-United_States,Ohio,2025-02-18,wastewater,51026549.99998037
-United_States,Ohio,2025-02-18,inf,24494.037538908415
+United_States,Ohio,2025-02-02,wastewater,44396533.60826206
+United_States,Ohio,2025-02-02,inf,21311.461597905374
+United_States,Ohio,2025-02-03,wastewater,42667515.047175504
+United_States,Ohio,2025-02-03,inf,20481.48885742537
+United_States,Ohio,2025-02-04,wastewater,41703841.90603435
+United_States,Ohio,2025-02-04,inf,20018.90132026367
+United_States,Ohio,2025-02-05,wastewater,41505514.18483861
+United_States,Ohio,2025-02-05,inf,19923.69898642028
+United_States,Ohio,2025-02-06,wastewater,42072531.88358828
+United_States,Ohio,2025-02-06,inf,20195.881855895193
+United_States,Ohio,2025-02-07,wastewater,42712544.94969647
+United_States,Ohio,2025-02-07,inf,20503.104352157472
+United_States,Ohio,2025-02-08,wastewater,44457619.80390327
+United_States,Ohio,2025-02-08,inf,21340.784520367215
+United_States,Ohio,2025-02-09,wastewater,46585967.03240188
+United_States,Ohio,2025-02-09,inf,22362.445144310965
+United_States,Ohio,2025-02-10,wastewater,48362716.6308635
+United_States,Ohio,2025-02-10,inf,23215.329992727642
+United_States,Ohio,2025-02-11,wastewater,49784912.832712844
+United_States,Ohio,2025-02-11,inf,23898.020222731517
+United_States,Ohio,2025-02-12,wastewater,50852555.63794991
+United_States,Ohio,2025-02-12,inf,24410.515834322585
+United_States,Ohio,2025-02-13,wastewater,51565645.0465747
+United_States,Ohio,2025-02-13,inf,24752.816827500847
+United_States,Ohio,2025-02-14,wastewater,52186202.9004247
+United_States,Ohio,2025-02-14,inf,25050.70032868351
+United_States,Ohio,2025-02-15,wastewater,52626817.174056716
+United_States,Ohio,2025-02-15,inf,25262.2063497358
+United_States,Ohio,2025-02-16,wastewater,52923200.80310919
+United_States,Ohio,2025-02-16,inf,25404.478005098194
+United_States,Ohio,2025-02-17,wastewater,53087267.94800064
+United_States,Ohio,2025-02-17,inf,25483.234393799255
+United_States,Ohio,2025-02-18,wastewater,53248019.27268326
+United_States,Ohio,2025-02-18,inf,25560.39910474301
+United_States,Ohio,2025-02-19,wastewater,53402967.91200043
+United_States,Ohio,2025-02-19,inf,25634.778379611464
 United_States,Oklahoma,2023-09-17,wastewater,36634511.54354363
 United_States,Oklahoma,2023-09-17,inf,2198.838797116809
 United_States,Oklahoma,2023-09-18,wastewater,33442960.148194574
@@ -50209,40 +50233,42 @@ United_States,Oklahoma,2025-01-31,wastewater,107105396.14126675
 United_States,Oklahoma,2025-01-31,inf,6428.569414281914
 United_States,Oklahoma,2025-02-01,wastewater,107030963.09796654
 United_States,Oklahoma,2025-02-01,inf,6424.101871069241
-United_States,Oklahoma,2025-02-02,wastewater,106571717.5955069
-United_States,Oklahoma,2025-02-02,inf,6396.53751206286
-United_States,Oklahoma,2025-02-03,wastewater,105903610.19829658
-United_States,Oklahoma,2025-02-03,inf,6356.43706022851
-United_States,Oklahoma,2025-02-04,wastewater,104516641.9116772
-United_States,Oklahoma,2025-02-04,inf,6273.18988289507
-United_States,Oklahoma,2025-02-05,wastewater,102410812.73564875
-United_States,Oklahoma,2025-02-05,inf,6146.7959800625395
-United_States,Oklahoma,2025-02-06,wastewater,99586122.67021124
-United_States,Oklahoma,2025-02-06,inf,5977.255351730919
-United_States,Oklahoma,2025-02-07,wastewater,92182217.00553705
-United_States,Oklahoma,2025-02-07,inf,5532.865776444015
-United_States,Oklahoma,2025-02-08,wastewater,92072984.0355898
-United_States,Oklahoma,2025-02-08,inf,5526.30950799319
-United_States,Oklahoma,2025-02-09,wastewater,92157606.80504905
-United_States,Oklahoma,2025-02-09,inf,5531.388648420251
-United_States,Oklahoma,2025-02-10,wastewater,91824965.27347584
-United_States,Oklahoma,2025-02-10,inf,5511.423182133465
-United_States,Oklahoma,2025-02-11,wastewater,91602703.6374141
-United_States,Oklahoma,2025-02-11,inf,5498.08282387859
-United_States,Oklahoma,2025-02-12,wastewater,91490821.8968638
-United_States,Oklahoma,2025-02-12,inf,5491.367573655626
-United_States,Oklahoma,2025-02-13,wastewater,91489320.05182497
-United_States,Oklahoma,2025-02-13,inf,5491.277431464575
-United_States,Oklahoma,2025-02-14,wastewater,91586351.20395577
-United_States,Oklahoma,2025-02-14,inf,5497.101335014661
-United_States,Oklahoma,2025-02-15,wastewater,91479817.67348538
-United_States,Oklahoma,2025-02-15,inf,5490.707089530763
-United_States,Oklahoma,2025-02-16,wastewater,91324768.56694956
-United_States,Oklahoma,2025-02-16,inf,5481.40089227182
-United_States,Oklahoma,2025-02-17,wastewater,91169719.46041372
-United_States,Oklahoma,2025-02-17,inf,5472.0946950128755
-United_States,Oklahoma,2025-02-18,wastewater,91014670.3538779
-United_States,Oklahoma,2025-02-18,inf,5462.7884977539325
+United_States,Oklahoma,2025-02-02,wastewater,102231704.73249903
+United_States,Oklahoma,2025-02-02,inf,6136.045744571297
+United_States,Oklahoma,2025-02-03,wastewater,97285299.43067722
+United_States,Oklahoma,2025-02-03,inf,5839.157716707667
+United_States,Oklahoma,2025-02-04,wastewater,91594438.18651041
+United_States,Oklahoma,2025-02-04,inf,5497.586723525209
+United_States,Oklahoma,2025-02-05,wastewater,85159120.9999986
+United_States,Oklahoma,2025-02-05,inf,5111.3327650239235
+United_States,Oklahoma,2025-02-06,wastewater,77979347.87114182
+United_States,Oklahoma,2025-02-06,inf,4680.395841203813
+United_States,Oklahoma,2025-02-07,wastewater,66196724.4126844
+United_States,Oklahoma,2025-02-07,inf,3973.1913910644803
+United_States,Oklahoma,2025-02-08,wastewater,61735127.43740064
+United_States,Oklahoma,2025-02-08,inf,3705.4020276197834
+United_States,Oklahoma,2025-02-09,wastewater,61833752.85297797
+United_States,Oklahoma,2025-02-09,inf,3711.3216204030923
+United_States,Oklahoma,2025-02-10,wastewater,61446068.669402756
+United_States,Oklahoma,2025-02-10,inf,3688.0524409338777
+United_States,Oklahoma,2025-02-11,wastewater,61187029.094551206
+United_States,Oklahoma,2025-02-11,inf,3672.5046352399154
+United_States,Oklahoma,2025-02-12,wastewater,61056634.12842333
+United_States,Oklahoma,2025-02-12,inf,3664.6782033212066
+United_States,Oklahoma,2025-02-13,wastewater,61054883.771019116
+United_States,Oklahoma,2025-02-13,inf,3664.5731451777497
+United_States,Oklahoma,2025-02-14,wastewater,61167970.80142475
+United_States,Oklahoma,2025-02-14,inf,3671.360738062974
+United_States,Oklahoma,2025-02-15,wastewater,61043809.02105875
+United_States,Oklahoma,2025-02-15,inf,3663.9084279792614
+United_States,Oklahoma,2025-02-16,wastewater,60734028.51436933
+United_States,Oklahoma,2025-02-16,inf,3645.3151025055595
+United_States,Oklahoma,2025-02-17,wastewater,60561928.232875206
+United_States,Oklahoma,2025-02-17,inf,3634.9854772423914
+United_States,Oklahoma,2025-02-18,wastewater,60393269.95701096
+United_States,Oklahoma,2025-02-18,inf,3624.862444484487
+United_States,Oklahoma,2025-02-19,wastewater,60230635.19099899
+United_States,Oklahoma,2025-02-19,inf,3615.1009486107914
 United_States,Virginia,2024-04-28,wastewater,2939419.818479706
 United_States,Virginia,2024-04-28,inf,3528.0654438350816
 United_States,Virginia,2024-04-29,wastewater,2871949.916292018
@@ -50831,12 +50857,14 @@ United_States,Virginia,2025-02-14,wastewater,4606853.686289479
 United_States,Virginia,2025-02-14,inf,5529.418150214594
 United_States,Virginia,2025-02-15,wastewater,4580186.120295976
 United_States,Virginia,2025-02-15,inf,5497.410160929983
-United_States,Virginia,2025-02-16,wastewater,4559450.601074695
-United_States,Virginia,2025-02-16,inf,5472.522164882376
-United_States,Virginia,2025-02-17,wastewater,4294803.377384058
-United_States,Virginia,2025-02-17,inf,5154.876921137391
-United_States,Virginia,2025-02-18,wastewater,4030156.1536934227
-United_States,Virginia,2025-02-18,inf,4837.231677392406
+United_States,Virginia,2025-02-16,wastewater,4370416.869867097
+United_States,Virginia,2025-02-16,inf,5245.632705064529
+United_States,Virginia,2025-02-17,wastewater,4118371.8949236344
+United_States,Virginia,2025-02-17,inf,4943.113425307401
+United_States,Virginia,2025-02-18,wastewater,3871367.819479041
+United_States,Virginia,2025-02-18,inf,4646.6445311454145
+United_States,Virginia,2025-02-19,wastewater,3633185.318157468
+United_States,Virginia,2025-02-19,inf,4360.7638117749275
 United_States,Wisconsin,2023-10-29,wastewater,92022246.61086707
 United_States,Wisconsin,2023-10-29,inf,9323.789397337967
 United_States,Wisconsin,2023-10-30,wastewater,97575506.19429277
@@ -51761,40 +51789,42 @@ United_States,Wisconsin,2025-01-31,wastewater,91580696.01311013
 United_States,Wisconsin,2025-01-31,inf,9279.051033155623
 United_States,Wisconsin,2025-02-01,wastewater,87608294.31719704
 United_States,Wisconsin,2025-02-01,inf,8876.563176377435
-United_States,Wisconsin,2025-02-02,wastewater,87852308.92648041
-United_States,Wisconsin,2025-02-02,inf,8901.286989483766
-United_States,Wisconsin,2025-02-03,wastewater,88101513.33265744
-United_States,Wisconsin,2025-02-03,inf,8926.536638190006
-United_States,Wisconsin,2025-02-04,wastewater,87169030.18833718
-United_States,Wisconsin,2025-02-04,inf,8832.056479593411
-United_States,Wisconsin,2025-02-05,wastewater,85294452.38764565
-United_States,Wisconsin,2025-02-05,inf,8642.12231403796
-United_States,Wisconsin,2025-02-06,wastewater,82735956.67376253
-United_States,Wisconsin,2025-02-06,inf,8382.892876713824
-United_States,Wisconsin,2025-02-07,wastewater,81228546.97160935
-United_States,Wisconsin,2025-02-07,inf,8230.160563430783
-United_States,Wisconsin,2025-02-08,wastewater,80731791.6431988
-United_States,Wisconsin,2025-02-08,inf,8179.828798725112
-United_States,Wisconsin,2025-02-09,wastewater,80727953.72446479
-United_States,Wisconsin,2025-02-09,inf,8179.439936821411
-United_States,Wisconsin,2025-02-10,wastewater,81523476.10364331
-United_States,Wisconsin,2025-02-10,inf,8260.043088749391
-United_States,Wisconsin,2025-02-11,wastewater,83213076.76162317
-United_States,Wisconsin,2025-02-11,inf,8431.235178497258
-United_States,Wisconsin,2025-02-12,wastewater,85513758.99346328
-United_States,Wisconsin,2025-02-12,inf,8664.342686626074
-United_States,Wisconsin,2025-02-13,wastewater,88579550.73417287
-United_States,Wisconsin,2025-02-13,inf,8974.971883143633
-United_States,Wisconsin,2025-02-14,wastewater,91266081.59008758
-United_States,Wisconsin,2025-02-14,inf,9247.173973752459
-United_States,Wisconsin,2025-02-15,wastewater,93553469.67593542
-United_States,Wisconsin,2025-02-15,inf,9478.93450523145
-United_States,Wisconsin,2025-02-16,wastewater,94676545.00942726
-United_States,Wisconsin,2025-02-16,inf,9592.72566196231
-United_States,Wisconsin,2025-02-17,wastewater,95710750.75538895
-United_States,Wisconsin,2025-02-17,inf,9697.512459981266
-United_States,Wisconsin,2025-02-18,wastewater,96589434.72317281
-United_States,Wisconsin,2025-02-18,inf,9786.541630254387
+United_States,Wisconsin,2025-02-02,wastewater,87825203.47572689
+United_States,Wisconsin,2025-02-02,inf,8898.540637121663
+United_States,Wisconsin,2025-02-03,wastewater,88045325.75935943
+United_States,Wisconsin,2025-02-03,inf,8920.843655031342
+United_States,Wisconsin,2025-02-04,wastewater,87081332.67649259
+United_States,Wisconsin,2025-02-04,inf,8823.170876804694
+United_States,Wisconsin,2025-02-05,wastewater,85174165.04193227
+United_States,Wisconsin,2025-02-05,inf,8629.934675505956
+United_States,Wisconsin,2025-02-06,wastewater,82581265.9597901
+United_States,Wisconsin,2025-02-06,inf,8367.219453254584
+United_States,Wisconsin,2025-02-07,wastewater,81040830.71085237
+United_States,Wisconsin,2025-02-07,inf,8211.140957344061
+United_States,Wisconsin,2025-02-08,wastewater,80512950.96307181
+United_States,Wisconsin,2025-02-08,inf,8157.655634210855
+United_States,Wisconsin,2025-02-09,wastewater,80509094.76423086
+United_States,Wisconsin,2025-02-09,inf,8157.264920147773
+United_States,Wisconsin,2025-02-10,wastewater,81308406.23723085
+United_States,Wisconsin,2025-02-10,inf,8238.251986988715
+United_States,Wisconsin,2025-02-11,wastewater,83006054.50717165
+United_States,Wisconsin,2025-02-11,inf,8410.25946912091
+United_States,Wisconsin,2025-02-12,wastewater,85317694.94843231
+United_States,Wisconsin,2025-02-12,inf,8644.47727438517
+United_States,Wisconsin,2025-02-13,wastewater,88398089.13509016
+United_States,Wisconsin,2025-02-13,inf,8956.586005860003
+United_States,Wisconsin,2025-02-14,wastewater,91097416.0074762
+United_States,Wisconsin,2025-02-14,inf,9230.084602119337
+United_States,Wisconsin,2025-02-15,wastewater,93395698.98238082
+United_States,Wisconsin,2025-02-15,inf,9462.949015048891
+United_States,Wisconsin,2025-02-16,wastewater,94850034.46580745
+United_States,Wisconsin,2025-02-16,inf,9610.303793485089
+United_States,Wisconsin,2025-02-17,wastewater,95770296.03034909
+United_States,Wisconsin,2025-02-17,inf,9703.545648952218
+United_States,Wisconsin,2025-02-18,wastewater,96517999.5167881
+United_States,Wisconsin,2025-02-18,inf,9779.303741108919
+United_States,Wisconsin,2025-02-19,wastewater,96963726.36654748
+United_States,Wisconsin,2025-02-19,inf,9824.465247472366
 United_States,Wyoming,2024-04-28,wastewater,8154618.845027472
 United_States,Wyoming,2024-04-28,inf,321.7898383800774
 United_States,Wyoming,2024-04-29,wastewater,7072251.082314968
@@ -52383,9 +52413,11 @@ United_States,Wyoming,2025-02-14,wastewater,10282252.902793864
 United_States,Wyoming,2025-02-14,inf,405.7485165956856
 United_States,Wyoming,2025-02-15,wastewater,10485908.826765696
 United_States,Wyoming,2025-02-15,inf,413.7849936040503
-United_States,Wyoming,2025-02-16,wastewater,10783105.858350502
-United_States,Wyoming,2025-02-16,inf,425.51270112517255
-United_States,Wyoming,2025-02-17,wastewater,11082251.053193819
-United_States,Wyoming,2025-02-17,inf,437.3172852179663
-United_States,Wyoming,2025-02-18,wastewater,11384805.533739526
-United_States,Wyoming,2025-02-18,inf,449.25640331118524
+United_States,Wyoming,2025-02-16,wastewater,11016262.63010939
+United_States,Wyoming,2025-02-16,inf,434.7133126224547
+United_States,Wyoming,2025-02-17,wastewater,11304409.754438637
+United_States,Wyoming,2025-02-17,inf,446.0839012826632
+United_States,Wyoming,2025-02-18,wastewater,11590885.079124164
+United_States,Wyoming,2025-02-18,inf,457.38851897017764
+United_States,Wyoming,2025-02-19,wastewater,11874434.754433192
+United_States,Wyoming,2025-02-19,inf,468.5776874554777
