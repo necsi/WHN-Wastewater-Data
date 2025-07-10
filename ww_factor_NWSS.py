@@ -45,6 +45,9 @@ nwss_data['Population'] = pd.to_numeric(nwss_data['Population'], errors='coerce'
 # Remove negative values
 nwss_data['gc/capita/day'] = nwss_data['gc/capita/day'].clip(lower=0)
 
+# Average duplicate dates for each treatment plant
+nwss_data = nwss_data.groupby(['key_plot_id', 'Date']).mean(numeric_only=True).reset_index()
+
 # Test Jan 18 2025 regarding 5 outlier plants in Erie County, NY - reverted until we made a decision in the team, not sure what we are looking at
 # Define the list of outlier treatment plant IDs
 outlier_plants = ['NWSS_ny_1012_Treatment plant_raw wastewater', 'NWSS_ny_1013_Treatment plant_raw wastewater', 'NWSS_ny_1000_Treatment plant_raw wastewater', 'NWSS_ny_2178_Treatment plant_raw wastewater', 'NWSS_ny_998_Treatment plant_raw wastewater']
@@ -87,7 +90,7 @@ def reindex_and_interpolate(df, overall_most_recent_date):
     else:
         # Otherwise, just use the normal date range
         extended_date_range = pd.date_range(start=df['Date'].min(), end=df['Date'].max())
-
+    
     # Reindex and interpolate
     df = df.set_index('Date').reindex(extended_date_range).interpolate(method='linear').reset_index()
     df['key_plot_id'] = df['key_plot_id'].fillna(method='ffill')
