@@ -46,7 +46,11 @@ nwss_data['Population'] = pd.to_numeric(nwss_data['Population'], errors='coerce'
 nwss_data['gc/capita/day'] = nwss_data['gc/capita/day'].clip(lower=0)
 
 # Average duplicate dates for each treatment plant
-nwss_data = nwss_data.groupby(['key_plot_id', 'Date']).mean(numeric_only=True).reset_index()
+nwss_data = nwss_data.groupby(['key_plot_id', 'Date']).agg({
+    'gc/capita/day': 'mean',
+    'Population': 'mean',
+    'State': 'first'  # Keep the first occurrence of State (should be the same for same plant/date)
+}).reset_index()
 
 # Test Jan 18 2025 regarding 5 outlier plants in Erie County, NY - reverted until we made a decision in the team, not sure what we are looking at
 # Define the list of outlier treatment plant IDs
