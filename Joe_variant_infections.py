@@ -3,7 +3,9 @@ import numpy as np
 import zipfile
 import os
 
+# ------------------------
 # Load the data files
+# ------------------------
 estimated_infections = pd.read_csv('Joe_EstimatedInfections.csv')
 nationwide_variant_proportions = pd.read_csv('4_week_variant_nationwide.csv')
 hhs_variant_proportions_files = {
@@ -16,10 +18,12 @@ hhs_variant_proportions_files = {
     7: pd.read_csv('4_week_variant_hhs7.csv'),
     8: pd.read_csv('4_week_variant_hhs8.csv'),
     9: pd.read_csv('4_week_variant_hhs9.csv'),
-    10: pd.read_csv('4_week_variant_hhs10.csv')  
+    10: pd.read_csv('4_week_variant_hhs10.csv'),
 }
 
-# Define HHS region mapping
+# ------------------------
+# HHS region mapping
+# ------------------------
 hhs_region_mapping = {
     "CT": 1, "ME": 1, "MA": 1, "NH": 1, "RI": 1, "VT": 1,
     "NJ": 2, "NY": 2,
@@ -33,101 +37,124 @@ hhs_region_mapping = {
     "AK": 10, "ID": 10, "OR": 10, "WA": 10
 }
 
-# Extract variant columns from the nationwide variant proportions
-variant_columns = nationwide_variant_proportions.columns[1:]
-variant_columns = [col for col in variant_columns if col != 'NA']
+DATE_COL = "Unnamed: 0"  # date column name in the variant CSVs
 
-# Define a function to process data for each state
-def process_state_data(state, estimated_infections, variant_proportions, nationwide_proportions):
-    # Filter the estimated infections for the given state
+# ------------------------
+# Variant column handling
+# ------------------------
+# Build canonical list of variants from nationwide columns, excluding date and 'NA'
+variant_columns = [c for c in nationwide_variant_proportions.columns if c not in (DATE_COL, 'NA')]
+
+def align_variant_columns(df, variant_cols, date_col=DATE_COL):
+    """Ensure df has exactly [date_col] + variant_cols; add missing as NaN and coerce to numeric."""
+    # Add any missing lineage columns
+    for c in variant_cols:
+        if c not in df.columns:
+            df[c] = np.nan
+    # Keep only date + variant cols, in order
+    df = df[[date_col] + variant_cols]
+    # Coerce numeric (in case of strings)
+    df[variant_cols] = df[variant_cols].apply(pd.to_numeric, errors='coerce')
+    return df
+
+# Align nationwide and every HHS table to the same lineage set/order
+nationwide_variant_proportions = align_variant_columns(nationwide_variant_proportions, variant_columns, DATE_COL)
+for r, df in list(hhs_variant_proportions_files.items()):
+    hhs_variant_proportions_files[r] = align_variant_columns(df, variant_columns, DATE_COL)
+
+# ------------------------
+# Core processing
+# ------------------------
+def process_state_data(state, estimated_infections_df, hhs_variant_df, nationwide_proportions_df):
+    """Merge state infections with HHS variant proportions; per-lineage fill from nationwide where HHS is NaN."""
+    # Select infections column for the state (or Nationwide)
     if state == "US":
-        state_data = estimated_infections[["Date", "Nationwide"]].rename(columns={"Nationwide": "State_Infections"})
+        state_data = estimated_infections_df[["Date", "Nationwide"]].rename(columns={"Nationwide": "State_Infections"})
     else:
-        state_data = estimated_infections[["Date", state]].rename(columns={state: "State_Infections"})
-    
-    # Remove rows with missing state infections
+        state_data = estimated_infections_df[["Date", state]].rename(columns={state: "State_Infections"})
     state_data = state_data.dropna(subset=["State_Infections"])
-    
-    # Merge with HHS-specific variant proportions where available
-    merged_data = pd.merge(state_data, variant_proportions, left_on="Date", right_on="Unnamed: 0", how="left").drop(columns=["Unnamed: 0"])
-    
-    # Identify rows where HHS-specific data is missing and use nationwide proportions instead
-    missing_mask = merged_data[variant_columns].isna().all(axis=1)
-    merged_data.loc[missing_mask, variant_columns] = pd.merge(
-        merged_data[["Date"]],
-        nationwide_proportions,
-        left_on="Date",
-        right_on="Unnamed: 0",
-        how="left"
-    ).drop(columns=["Unnamed: 0"]).loc[missing_mask, variant_columns]
-    
-    # Calculate variant-specific infections for the state
-    for variant in variant_columns:
-        merged_data[variant] = merged_data["State_Infections"] * merged_data[variant]
-    
-    # Keep only relevant columns: Date, Region, State Infections, and calculated variant infections
-    merged_data_final = merged_data[["Date"]].copy()
-    merged_data_final["Region"] = state
-    merged_data_final["Total_State_Infections"] = merged_data["State_Infections"].round(0).astype(int)
-    merged_data_final = pd.concat([merged_data_final, merged_data[variant_columns]], axis=1)
-    
-    # Rename columns for output format
-    merged_data_final.columns = ["Date", "Region", "Total_State_Infections"] + [variant for variant in variant_columns]
-    
-    return merged_data_final
 
-# Remove initial empty rows for each state
-def remove_initial_empty_rows(state_data):
-    # Find the first row index where any variant column has a non-NaN value or State Infections is non-NaN
-    first_valid_index = state_data[variant_columns].notna().any(axis=1).idxmax()
-    # Slice the DataFrame from that row onward
-    return state_data.loc[first_valid_index:].reset_index(drop=True)
+    # Merge HHS-specific variant proportions (by date)
+    merged = pd.merge(
+        state_data, hhs_variant_df,
+        left_on="Date", right_on=DATE_COL, how="left"
+    ).drop(columns=[DATE_COL])
 
-# Round the infections to integers for each state
-def round_variant_infections(state_data):
-    variant_columns_to_round = state_data.columns[3:]  # Columns from the fourth onward (variant-specific infections)
-    state_data[variant_columns_to_round] = state_data[variant_columns_to_round].fillna(0).round(0).astype(int)
-    return state_data
+    # Nationwide fallback (merge on the same dates)
+    nw = pd.merge(
+        merged[["Date"]], nationwide_proportions_df,
+        left_on="Date", right_on=DATE_COL, how="left"
+    ).drop(columns=[DATE_COL])
 
-# Process data for each state and save individual files
+    # Fill each lineage separately from nationwide if HHS is NaN
+    for v in variant_columns:
+        merged[v] = merged[v].fillna(nw[v])
+
+    # Compute variant-specific infections
+    for v in variant_columns:
+        merged[v] = merged["State_Infections"] * merged[v]
+
+    # Final tidy frame
+    out = merged[["Date"]].copy()
+    out["Region"] = state
+    out["Total_State_Infections"] = merged["State_Infections"].round(0).astype("Int64")
+    out = pd.concat([out, merged[variant_columns]], axis=1)
+
+    # Column order / names
+    out.columns = ["Date", "Region", "Total_State_Infections"] + variant_columns
+    return out
+
+def remove_initial_empty_rows(state_df):
+    """Trim leading rows where both Total_State_Infections and all variants are NaN."""
+    if state_df.empty:
+        return state_df
+    has_any = state_df["Total_State_Infections"].notna() | state_df[variant_columns].notna().any(axis=1)
+    if not has_any.any():
+        return state_df  # nothing valid—return as is
+    first_idx = has_any.idxmax()
+    return state_df.loc[first_idx:].reset_index(drop=True)
+
+def round_variant_infections(state_df):
+    """Round all variant infection columns to ints (keep NaNs as 0)."""
+    if state_df.empty:
+        return state_df
+    to_round = state_df.columns[3:]  # from the 4th column onward
+    state_df[to_round] = state_df[to_round].fillna(0).round(0).astype(int)
+    return state_df
+
+# ------------------------
+# Run for all states by region
+# ------------------------
 state_files = {}
 output_dir = "state_variant_infections"
 os.makedirs(output_dir, exist_ok=True)
 
-for region, variant_proportions in hhs_variant_proportions_files.items():
-    # Filter the estimated infections data to only include states in the current HHS region
-    region_states = [state for state, hhs_region in hhs_region_mapping.items() if hhs_region == region]
-    region_estimated_infections = estimated_infections[["Date"] + region_states]
-    
+for region, variant_df in hhs_variant_proportions_files.items():
+    # States in this HHS region
+    region_states = [s for s, h in hhs_region_mapping.items() if h == region]
+    # Only keep those columns from estimated infections
+    region_est_inf = estimated_infections[["Date"] + region_states]
+
     for state in region_states:
-        # Process state data
-        state_data_final = process_state_data(state, region_estimated_infections, variant_proportions, nationwide_variant_proportions)
-        
-        # Remove initial empty rows
-        state_data_final = remove_initial_empty_rows(state_data_final)
-        
-        # Round the infections to integers
-        state_data_final = round_variant_infections(state_data_final)
-        
-        # Save to dictionary
-        state_files[state] = state_data_final
-        
-        # Save to CSV
-        state_data_final.to_csv(f"{output_dir}/{state}_variant_infections.csv", index=False)
+        df = process_state_data(state, region_est_inf, variant_df, nationwide_variant_proportions)
+        df = remove_initial_empty_rows(df)
+        df = round_variant_infections(df)
+        state_files[state] = df
+        df.to_csv(f"{output_dir}/{state}_variant_infections.csv", index=False)
 
-# Process nationwide data
-nationwide_data = process_state_data("US", estimated_infections, nationwide_variant_proportions, nationwide_variant_proportions)
-nationwide_data = remove_initial_empty_rows(nationwide_data)
-nationwide_data = round_variant_infections(nationwide_data)
+# ------------------------
+# Nationwide (US)
+# ------------------------
+us_df = process_state_data("US", estimated_infections, nationwide_variant_proportions, nationwide_variant_proportions)
+us_df = remove_initial_empty_rows(us_df)
+us_df = round_variant_infections(us_df)
+state_files["US"] = us_df
+us_df.to_csv(f"{output_dir}/US_variant_infections.csv", index=False)
 
-# Save nationwide data to dictionary
-state_files["US"] = nationwide_data
-
-# Save nationwide data to CSV
-nationwide_data.to_csv(f"{output_dir}/US_variant_infections.csv", index=False)
-
-# Create a zip file containing all CSVs
+# ------------------------
+# Zip everything
+# ------------------------
 with zipfile.ZipFile('state_variant_infections.zip', 'w') as zipf:
-    for state, df in state_files.items():
+    for state in state_files.keys():
         csv_filename = f"{output_dir}/{state}_variant_infections.csv"
         zipf.write(csv_filename, arcname=f"{state}_variant_infections.csv")
