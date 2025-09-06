@@ -4,7 +4,7 @@ import pandas as pd
 from sodapy import Socrata
 
 client = Socrata("data.cdc.gov", None)
-results = client.get("jr58-6ysp", limit=100000000, time_interval="biweekly")
+results = client.get("jr58-6ysp", limit=100000000, time_interval="4_week")
 
 # Convert to pandas DataFrame
 results_df = pd.DataFrame.from_records(results)
@@ -148,14 +148,14 @@ for column in hhs10_interpolated.columns:
 
 
 # Save the data to csv
-nationwide_interpolated.to_csv('biweekly_variant_nationwide.csv', index=True)
-hhs1_interpolated.to_csv('biweekly_variant_hhs1.csv', index=True)
-hhs2_interpolated.to_csv('biweekly_variant_hhs2.csv', index=True)
-hhs3_interpolated.to_csv('biweekly_variant_hhs3.csv', index=True)
-hhs4_interpolated.to_csv('biweekly_variant_hhs4.csv', index=True)
-hhs5_interpolated.to_csv('biweekly_variant_hhs5.csv', index=True)
-hhs6_interpolated.to_csv('biweekly_variant_hhs6.csv', index=True)
-hhs7_interpolated.to_csv('biweekly_variant_hhs7.csv', index=True)
-hhs8_interpolated.to_csv('biweekly_variant_hhs8.csv', index=True)
-hhs9_interpolated.to_csv('biweekly_variant_hhs9.csv', index=True)
-hhs10_interpolated.to_csv('biweekly_variant_hhs10.csv', index=True)
+nationwide_interpolated.to_csv('4_week_variant_nationwide.csv', index=True)
+hhs1_interpolated.to_csv('4_week_variant_hhs1.csv', index=True)
+hhs2_interpolated.to_csv('4_week_variant_hhs2.csv', index=True)
+hhs3_interpolated.to_csv('4_week_variant_hhs3.csv', index=True)
+hhs4_interpolated.to_csv('4_week_variant_hhs4.csv', index=True)
+hhs5_interpolated.to_csv('4_week_variant_hhs5.csv', index=True)
+hhs6_interpolated.to_csv('4_week_variant_hhs6.csv', index=True)
+hhs7_interpolated.to_csv('4_week_variant_hhs7.csv', index=True)
+hhs8_interpolated.to_csv('4_week_variant_hhs8.csv', index=True)
+hhs9_interpolated.to_csv('4_week_variant_hhs9.csv', index=True)
+hhs10_interpolated.to_csv('4_week_variant_hhs10.csv', index=True)
