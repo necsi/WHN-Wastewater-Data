@@ -5,18 +5,18 @@ import os
 
 # Load the data files
 estimated_infections = pd.read_csv('Joe_EstimatedInfections_min.csv')
-nationwide_variant_proportions = pd.read_csv('biweekly_variant_nationwide.csv')
+nationwide_variant_proportions = pd.read_csv('4_week_variant_nationwide.csv')
 hhs_variant_proportions_files = {
-    1: pd.read_csv('biweekly_variant_hhs1.csv'),
-    2: pd.read_csv('biweekly_variant_hhs2.csv'),
-    3: pd.read_csv('biweekly_variant_hhs3.csv'),
-    4: pd.read_csv('biweekly_variant_hhs4.csv'),
-    5: pd.read_csv('biweekly_variant_hhs5.csv'),
-    6: pd.read_csv('biweekly_variant_hhs6.csv'),
-    7: pd.read_csv('biweekly_variant_hhs7.csv'),
-    8: pd.read_csv('biweekly_variant_hhs8.csv'),
-    9: pd.read_csv('biweekly_variant_hhs9.csv'),
-    10: pd.read_csv('biweekly_variant_hhs10.csv')  
+    1: pd.read_csv('4_week_variant_hhs1.csv'),
+    2: pd.read_csv('4_week_variant_hhs2.csv'),
+    3: pd.read_csv('4_week_variant_hhs3.csv'),
+    4: pd.read_csv('4_week_variant_hhs4.csv'),
+    5: pd.read_csv('4_week_variant_hhs5.csv'),
+    6: pd.read_csv('4_week_variant_hhs6.csv'),
+    7: pd.read_csv('4_week_variant_hhs7.csv'),
+    8: pd.read_csv('4_week_variant_hhs8.csv'),
+    9: pd.read_csv('4_week_variant_hhs9.csv'),
+    10: pd.read_csv('4_week_variant_hhs10.csv')  
 }
 
 # Define HHS region mapping
