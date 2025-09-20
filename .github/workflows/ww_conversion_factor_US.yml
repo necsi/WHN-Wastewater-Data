@@ -1,4 +1,4 @@
-name: Update US Wastewater data (conversion factor approach) 
+name: Update US Wastewater data (conversion factor approach)
 
 on: #yamllint disable-line rule:truthy  
   push:
