@@ -20,7 +20,7 @@ df = df[df['typ'] == 'SARS-CoV-2']
 # Interpolate missing values
 df_inter = df.interpolate(method='linear')
 # Select necessary columns
-df_wastewater = df_inter[['datum', 'loess_vorhersage']]
+df_wastewater = df_inter[['datum', 'vorhersage']]
 # Change date column to English
 df_en = df_wastewater.rename(columns={'datum':'Date'})
 # Change date string into datetime object
@@ -53,11 +53,11 @@ def conversion_factor(date, cf):
         return cf * max_factors[1]  # After the second transition
 
 # Apply the conversion factor to the columns
-df_en['loess_vorhersage'] = df_en.apply(lambda row: row['loess_vorhersage'] * conversion_factor(row['Date'], 1), axis=1)
+df_en['vorhersage'] = df_en.apply(lambda row: row['vorhersage'] * conversion_factor(row['Date'], 1), axis=1)
 
 infections = []
 for index, row in df_en.iterrows():
-    infection_level = row['loess_vorhersage'] / 1.7651333303853443 # Conversion factor based on IHME and RKI data from mid to end 2022 (optim_initial_max)
+    infection_level = row['vorhersage'] / 1.7651333303853443 # Conversion factor based on IHME and RKI data from mid to end 2022 (optim_initial_max)
     infections.append(infection_level)
 
 df_en = df_en.assign(estimated_infections=infections)
@@ -66,7 +66,7 @@ rows_list_json_nationwide = []
 # Fill in json list for the regions
 for index, row in df_en.iterrows():
     rows_list_json_nationwide.append({'Country': 'Germany', 'Region': 'Nationwide', 'Date': row['Date'], 'Measure': 'inf', 'Value': round_to_two_significant_digits(row['estimated_infections'])})
-    rows_list_json_nationwide.append({'Country': 'Germany', 'Region': 'Nationwide', 'Date': row['Date'], 'Measure': 'wastewater', 'Value': round_to_two_significant_digits(row['loess_vorhersage'])})
+    rows_list_json_nationwide.append({'Country': 'Germany', 'Region': 'Nationwide', 'Date': row['Date'], 'Measure': 'wastewater', 'Value': round_to_two_significant_digits(row['vorhersage'])})
 
 combined_df = pd.DataFrame(rows_list_json_nationwide)
 
