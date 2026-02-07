@@ -79,15 +79,24 @@ outlier_plants = [
 nwss_data = nwss_data[~nwss_data["key_plot_id"].isin(outlier_plants)].reset_index(drop=True)
 
 # -------------------------------------------------------------------
-# Outlier filtering vs local median (unchanged)
+# Outlier filtering vs trailing local median
 # -------------------------------------------------------------------
+window = 5  
+threshold_factor = 10
+
 nwss_data["rolling_median"] = (
     nwss_data
+    .sort_values(["key_plot_id", "Date"])
     .groupby("key_plot_id")["gc/capita/day"]
-    .transform(lambda x: x.rolling(window=3, center=True).median())
+    .transform(lambda x: x.rolling(window=window, min_periods=3).median())
 )
-threshold_factor = 10
-nwss_data["is_outlier"] = nwss_data["gc/capita/day"] > (threshold_factor * nwss_data["rolling_median"])
+
+# Only flag where rolling_median is available
+nwss_data["is_outlier"] = (
+    nwss_data["rolling_median"].notna()
+    & (nwss_data["gc/capita/day"] > threshold_factor * nwss_data["rolling_median"])
+)
+
 nwss_data = nwss_data[~nwss_data["is_outlier"]].drop(columns=["is_outlier", "rolling_median"])
 
 # -------------------------------------------------------------------
@@ -548,3 +557,4 @@ df_pivot = df_pivot[cols]
 df_pivot.to_csv('Joe_EstimatedInfections_min.csv')
 
 print("Final dataset generated and saved: United_States_wwb.csv/.json and Joe_EstimatedInfections.csv")
+
