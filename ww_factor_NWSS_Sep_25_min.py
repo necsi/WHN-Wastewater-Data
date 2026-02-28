@@ -432,7 +432,7 @@ for state, group in state_aggregated_with_full_population.groupby('State'):
             on='Date', how='inner'
         )
         correlation = merged_state_data['Smoothed_gc/capita/day'].corr(merged_state_data['Value'])
-        if pd.notna(correlation) and correlation >= 0.6:
+        if pd.notna(correlation) and correlation >= 0.5:
             filtered_states.append(state)
 
         print(
@@ -557,4 +557,5 @@ df_pivot = df_pivot[cols]
 df_pivot.to_csv('Joe_EstimatedInfections_min.csv')
 
 print("Final dataset generated and saved: United_States_wwb.csv/.json and Joe_EstimatedInfections.csv")
+
 
