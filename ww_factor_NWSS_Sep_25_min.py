@@ -11,6 +11,12 @@ client = Socrata("data.cdc.gov", None, timeout=180)
 results_data = client.get("j9g8-acpt", limit=200000000)
 nwss_raw = pd.DataFrame.from_records(results_data)
 
+# Backward-compatible rename if CDC changed column names
+nwss_raw = nwss_raw.rename(columns={
+    "site": "sewershed_id",
+    "state_territory": "wwtp_jurisdiction"
+})
+
 # Basic schema checks (fail fast if CDC changes names)
 needed_cols = [
     "sample_collect_date",    # date of sample
@@ -557,5 +563,6 @@ df_pivot = df_pivot[cols]
 df_pivot.to_csv('Joe_EstimatedInfections_min.csv')
 
 print("Final dataset generated and saved: United_States_wwb.csv/.json and Joe_EstimatedInfections.csv")
+
 
 
