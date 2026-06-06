@@ -66,8 +66,7 @@ for r, df in list(hhs_variant_proportions_files.items()):
 # Core processing
 # ------------------------
 def process_state_data(state, estimated_infections_df, hhs_variant_df, nationwide_proportions_df):
-    """Merge state infections with HHS variant proportions; per-lineage fill from nationwide where HHS is NaN."""
-    # Select infections column for the state (or Nationwide)
+    """Merge state infections with HHS variant proportions; fall back to nationwide only when the whole HHS row is missing."""    # Select infections column for the state (or Nationwide)
     if state == "US":
         state_data = estimated_infections_df[["Date", "Nationwide"]].rename(columns={"Nationwide": "State_Infections"})
     else:
@@ -86,13 +85,30 @@ def process_state_data(state, estimated_infections_df, hhs_variant_df, nationwid
         left_on="Date", right_on=DATE_COL, how="left"
     ).drop(columns=[DATE_COL])
 
-    # Fill each lineage separately from nationwide if HHS is NaN
-    for v in variant_columns:
-        merged[v] = merged[v].fillna(nw[v])
+    # Discontinued previous approach: Fill each lineage separately from nationwide if HHS is NaN
+    # for v in variant_columns:
+    #    merged[v] = merged[v].fillna(nw[v])
+    # Previous approach end
+
+
+    # GISAID-like row-level fallback:
+    # If an HHS row/date has any variant data, use that HHS row as the complete source.
+    # Only if the whole HHS row/date is missing, replace the whole row with nationwide values.
+    hhs_has_any_data = merged[variant_columns].notna().any(axis=1)
+    missing_hhs_row = ~hhs_has_any_data
+    merged.loc[missing_hhs_row, variant_columns] = nw.loc[missing_hhs_row, variant_columns].to_numpy()
+
+    # Do not fill individual missing HHS lineages from nationwide. Treat them as 0,
+    # then normalize the selected row so the variant proportions sum to 1 when data exists.
+    merged[variant_columns] = merged[variant_columns].fillna(0)
+    row_sums = merged[variant_columns].sum(axis=1)
+    has_props = row_sums > 0
+    merged.loc[has_props, variant_columns] = merged.loc[has_props, variant_columns].div(row_sums[has_props], axis=0)
 
     # Compute variant-specific infections
     for v in variant_columns:
         merged[v] = merged["State_Infections"] * merged[v]
+    
 
     # Final tidy frame
     out = merged[["Date"]].copy()
