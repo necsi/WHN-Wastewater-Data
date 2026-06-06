@@ -122,12 +122,41 @@ def round_variant_infections(state_df):
     state_df[to_round] = state_df[to_round].fillna(0).round(0).astype(int)
     return state_df
 
-# ------------------------
-# Run for all states by region
-# ------------------------
+
+def remove_trailing_zero_variant_rows(state_df):
+    """Trim trailing rows where all variant infection columns are 0."""
+    if state_df.empty:
+        return state_df
+    variant_cols = state_df.columns[3:]  # keep Date, Region, Total_State_Infections untouched
+    has_variant_cases = state_df[variant_cols].fillna(0).ne(0).any(axis=1)
+    if not has_variant_cases.any():
+        return state_df.iloc[0:0].copy()
+    last_idx = has_variant_cases[has_variant_cases].index[-1]
+    return state_df.loc[:last_idx].reset_index(drop=True)
+
+def sort_variant_columns_by_current_relevance(state_df):
+    """Sort variant columns so the largest current contributor is rightmost.
+
+    Tie-breaker: variants last seen more recently are placed farther right.
+    Final tie-breaker: variant name, for stable/reproducible output.
+    """
+    if state_df.empty:
+        return state_df
+
+    fixed_cols = list(state_df.columns[:3])
+    variant_cols = list(state_df.columns[3:])
+
+    def sort_key(col):
+        values = state_df[col].fillna(0)
+        current_cases = values.iloc[-1]
+        nonzero_positions = np.flatnonzero(values.to_numpy() != 0)
+        last_seen = int(nonzero_positions[-1]) if len(nonzero_positions) else -1
+        return (current_cases, last_seen, col)
+
+    sorted_variant_cols = sorted(variant_cols, key=sort_key)
+    return state_df[fixed_cols + sorted_variant_cols]
+
 state_files = {}
-output_dir = "state_variant_infections"
-os.makedirs(output_dir, exist_ok=True)
 
 for region, variant_df in hhs_variant_proportions_files.items():
     # States in this HHS region
@@ -139,8 +168,9 @@ for region, variant_df in hhs_variant_proportions_files.items():
         df = process_state_data(state, region_est_inf, variant_df, nationwide_variant_proportions)
         df = remove_initial_empty_rows(df)
         df = round_variant_infections(df)
+        df = remove_trailing_zero_variant_rows(df)
+        df = sort_variant_columns_by_current_relevance(df)
         state_files[state] = df
-        df.to_csv(f"{output_dir}/{state}_variant_infections.csv", index=False)
 
 # ------------------------
 # Nationwide (US)
@@ -148,13 +178,25 @@ for region, variant_df in hhs_variant_proportions_files.items():
 us_df = process_state_data("US", estimated_infections, nationwide_variant_proportions, nationwide_variant_proportions)
 us_df = remove_initial_empty_rows(us_df)
 us_df = round_variant_infections(us_df)
+us_df = remove_trailing_zero_variant_rows(us_df)
+us_df = sort_variant_columns_by_current_relevance(us_df)
 state_files["US"] = us_df
-us_df.to_csv(f"{output_dir}/US_variant_infections.csv", index=False)
+
+# ------------------------
+# Output folder + files
+# ------------------------
+output_date = pd.to_datetime(us_df["Date"].iloc[-1]).strftime("%m-%d-%Y")
+output_dir = f"variant_infections_CDC_{output_date}"
+zip_filename = f"{output_dir}.zip"
+os.makedirs(output_dir, exist_ok=True)
+
+for state, df in state_files.items():
+    df.to_csv(f"{output_dir}/{state}_variant_infections.csv", index=False)
 
 # ------------------------
 # Zip everything
 # ------------------------
-with zipfile.ZipFile('state_variant_infections.zip', 'w') as zipf:
+with zipfile.ZipFile(zip_filename, 'w') as zipf:
     for state in state_files.keys():
         csv_filename = f"{output_dir}/{state}_variant_infections.csv"
         zipf.write(csv_filename, arcname=f"{state}_variant_infections.csv")
