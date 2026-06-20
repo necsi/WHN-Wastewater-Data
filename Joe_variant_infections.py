@@ -151,9 +151,9 @@ def remove_trailing_zero_variant_rows(state_df):
     return state_df.loc[:last_idx].reset_index(drop=True)
 
 def sort_variant_columns_by_current_relevance(state_df):
-    """Sort variant columns so the largest current contributor is rightmost.
+    """Sort variant columns so the largest current contributor is leftmost.
 
-    Tie-breaker: variants last seen more recently are placed farther right.
+    Tie-breaker: variants last seen more recently are placed farther left.
     Final tie-breaker: variant name, for stable/reproducible output.
     """
     if state_df.empty:
@@ -169,7 +169,7 @@ def sort_variant_columns_by_current_relevance(state_df):
         last_seen = int(nonzero_positions[-1]) if len(nonzero_positions) else -1
         return (current_cases, last_seen, col)
 
-    sorted_variant_cols = sorted(variant_cols, key=sort_key)
+    sorted_variant_cols = sorted(variant_cols, key=sort_key, reverse=True)
     return state_df[fixed_cols + sorted_variant_cols]
 
 state_files = {}
