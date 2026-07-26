@@ -637,5 +637,54 @@ df_pivot.to_csv('Joe_EstimatedInfections.csv')
 
 print("Final dataset generated and saved: United_States_wwb.csv/.json and Joe_EstimatedInfections.csv")
 
+# -------------------------------------------------------------------
+# Temporary check after revised outlier filtering
+# -------------------------------------------------------------------
+
+output_check = df_pivot.reset_index().copy()
+
+output_check["Date"] = pd.to_datetime(
+    output_check["Date"],
+    errors="coerce"
+)
+
+dates_to_check = pd.to_datetime([
+    "2024-10-20",
+    "2024-11-07",
+    "2024-11-28",
+    "2024-12-15",
+    "2025-01-15",
+    "2025-08-24"
+])
+
+columns_to_check = [
+    column
+    for column in [
+        "Date",
+        "AZ",
+        "Nationwide"
+    ]
+    if column in output_check.columns
+]
+
+print("\nSelected Arizona and nationwide results:")
+print(
+    output_check[
+        output_check["Date"].isin(
+            dates_to_check
+        )
+    ][columns_to_check]
+    .to_string(index=False)
+)
+
+print("\nLatest seven results:")
+print(
+    output_check[
+        columns_to_check
+    ]
+    .tail(7)
+    .to_string(index=False)
+)
+
 
 
