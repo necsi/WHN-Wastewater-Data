@@ -85,25 +85,100 @@ outlier_plants = [
 nwss_data = nwss_data[~nwss_data["key_plot_id"].isin(outlier_plants)].reset_index(drop=True)
 
 # -------------------------------------------------------------------
-# Outlier filtering vs trailing local median
+# Outlier filtering vs PRIOR trailing local median
 # -------------------------------------------------------------------
-window = 5  
+window = 5
 threshold_factor = 10
 
-nwss_data["rolling_median"] = (
+# Sort explicitly so each observation is compared with its
+# own site's preceding observations.
+nwss_data = (
     nwss_data
     .sort_values(["key_plot_id", "Date"])
-    .groupby("key_plot_id")["gc/capita/day"]
-    .transform(lambda x: x.rolling(window=window, min_periods=3).median())
+    .reset_index(drop=True)
 )
 
-# Only flag where rolling_median is available
+# shift(1) excludes the current observation from its own
+# reference median.
+nwss_data["rolling_median"] = (
+    nwss_data
+    .groupby("key_plot_id")["gc/capita/day"]
+    .transform(
+        lambda x: (
+            x.shift(1)
+             .rolling(
+                 window=window,
+                 min_periods=3
+             )
+             .median()
+        )
+    )
+)
+
 nwss_data["is_outlier"] = (
     nwss_data["rolling_median"].notna()
-    & (nwss_data["gc/capita/day"] > threshold_factor * nwss_data["rolling_median"])
+    & (
+        nwss_data["gc/capita/day"]
+        > threshold_factor
+        * nwss_data["rolling_median"]
+    )
 )
 
-nwss_data = nwss_data[~nwss_data["is_outlier"]].drop(columns=["is_outlier", "rolling_median"])
+# Temporary audit output
+outlier_audit = nwss_data.loc[
+    nwss_data["is_outlier"],
+    [
+        "Date",
+        "key_plot_id",
+        "State",
+        "Population",
+        "gc/capita/day",
+        "rolling_median"
+    ]
+].copy()
+
+outlier_audit["Ratio_to_Reference"] = (
+    outlier_audit["gc/capita/day"]
+    / outlier_audit["rolling_median"]
+)
+
+print("\nTotal observations removed by revised outlier filter:")
+print(len(outlier_audit))
+
+print("\nSites with the most removed observations:")
+print(
+    outlier_audit
+    .groupby(["State", "key_plot_id"])
+    .size()
+    .sort_values(ascending=False)
+    .head(30)
+    .to_string()
+)
+
+print("\nArizona observations removed:")
+print(
+    outlier_audit[
+        outlier_audit["State"]
+        .astype(str)
+        .str.strip()
+        .str.upper()
+        .isin(["AZ", "ARIZONA"])
+    ]
+    .sort_values(["key_plot_id", "Date"])
+    .to_string(index=False)
+)
+
+nwss_data = (
+    nwss_data[
+        ~nwss_data["is_outlier"]
+    ]
+    .drop(
+        columns=[
+            "is_outlier",
+            "rolling_median"
+        ]
+    )
+)
 
 # -------------------------------------------------------------------
 # Extend recent sites to the overall most recent date; then interpolate (unchanged)
@@ -273,14 +348,15 @@ merged_data = pd.concat(
 )
 
 # Load the Biobot data (unchanged)
-biobot_file_path = 'United_States_states_min.csv'
+biobot_file_path = 'United_States_states_cleaned_min.csv'
 biobot_data = pd.read_csv(biobot_file_path)
-biobot_data['Date'] = pd.to_datetime(biobot_data['Date'], errors='coerce')
+biobot_data["Date"] = pd.to_datetime(
+    biobot_data["Date"],
+    format="mixed",
+    errors="coerce"
+)
 
 # --- PART 3: Biobot-based conversion factors (keep legacy behavior) ---
-
-# Ensure dates are correctly formatted in Biobot data
-biobot_data['Date'] = pd.to_datetime(biobot_data['Date'], errors='coerce')
 
 # Filter the Biobot data to include only the 'inf' measure
 biobot_data_inf = biobot_data[biobot_data['Measure'] == 'inf'].copy()
