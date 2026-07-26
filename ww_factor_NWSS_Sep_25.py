@@ -351,11 +351,7 @@ merged_data = pd.concat(
 # Load the Biobot data (unchanged)
 biobot_file_path = 'United_States_states_cleaned.csv'
 biobot_data = pd.read_csv(biobot_file_path)
-biobot_data["Date"] = pd.to_datetime(
-    biobot_data["Date"],
-    format="mixed",
-    errors="coerce"
-)
+biobot_data['Date'] = pd.to_datetime(biobot_data['Date'], errors='coerce')
 
 # --- PART 3: Biobot-based conversion factors (keep legacy behavior) ---
 
