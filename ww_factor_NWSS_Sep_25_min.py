@@ -19,12 +19,13 @@ nwss_raw = nwss_raw.rename(columns={
 
 # Basic schema checks (fail fast if CDC changes names)
 needed_cols = [
-    "sample_collect_date",    # date of sample
-    "sewershed_id",           # site identifier (old: key_plot_id)
-    "wwtp_jurisdiction",      # state/jurisdiction
-    "population_served",      # population served by sewershed
-    "sample_matrix",          # matrix to filter influent-like samples
-    "pcr_target_flowpop_lin"  # per-capita, flow+population normalized concentration
+    "sample_collect_date",
+    "sewershed_id",
+    "wwtp_jurisdiction",
+    "population_served",
+    "sample_matrix",
+    "major_lab_method",
+    "pcr_target_flowpop_lin"
 ]
 missing = [c for c in needed_cols if c not in nwss_raw.columns]
 if missing:
@@ -34,6 +35,17 @@ if missing:
 nwss_raw["sample_collect_date"]   = pd.to_datetime(nwss_raw["sample_collect_date"], errors="coerce")
 nwss_raw["pcr_target_flowpop_lin"] = pd.to_numeric(nwss_raw["pcr_target_flowpop_lin"], errors="coerce")
 nwss_raw["population_served"]      = pd.to_numeric(nwss_raw["population_served"], errors="coerce")
+nwss_raw["major_lab_method"] = (
+    nwss_raw["major_lab_method"]
+    .astype(str)
+    .str.strip()
+)
+
+nwss_raw["sewershed_id"] = (
+    nwss_raw["sewershed_id"]
+    .astype(str)
+    .str.strip()
+)
 
 # -------------------------------------------------------------------
 # Filter to influent-like matrices (exclude sludges/effluents)
@@ -56,7 +68,153 @@ nwss_data = nwss_raw.rename(columns={
     "pcr_target_flowpop_lin": "gc/capita/day",
     "wwtp_jurisdiction":      "State",
     "population_served":      "Population"
-})[["Date", "key_plot_id", "gc/capita/day", "State", "Population"]]
+})[
+    [
+        "Date",
+        "key_plot_id",
+        "gc/capita/day",
+        "State",
+        "Population",
+        "major_lab_method"
+    ]
+].copy()
+
+# -------------------------------------------------------------------
+# Provisional Arizona method-6 harmonization
+#
+# Central scenario:
+# - Allow for an approximately 2x genuine Arizona wave
+# - Use direct same-day overlap factors for sites 2296 and 2297
+#
+# Apply before duplicate averaging, outlier filtering,
+# interpolation, and state aggregation.
+# -------------------------------------------------------------------
+
+ARIZONA_METHOD6_DIVISORS = {
+    "17":   12.262381,
+    "18":   12.852028,
+    "19":   15.751837,
+    "20":   17.017968,
+    "21":    5.655802,
+    "22":   11.773881,
+    "23":    4.799532,
+    "24":    9.602336,
+    "25":    3.397563,
+    "26":    8.331652,
+    "27":    5.101465,
+    "28":    3.664422,
+    "29":   10.503913,
+    "30":    7.411616,
+    "32":   35.002515,
+    "33":    8.477962,
+    "34":    6.342501,
+    "35":   15.776036,
+    "2296":  1.447843,
+    "2297":  1.800016,
+    "2408":  3.150591
+}
+
+nwss_data["key_plot_id"] = (
+    nwss_data["key_plot_id"]
+    .astype(str)
+    .str.strip()
+)
+
+nwss_data["major_lab_method"] = (
+    nwss_data["major_lab_method"]
+    .astype(str)
+    .str.strip()
+)
+
+nwss_data["Arizona_Method6_Divisor"] = (
+    nwss_data["key_plot_id"]
+    .map(ARIZONA_METHOD6_DIVISORS)
+)
+
+state_normalized = (
+    nwss_data["State"]
+    .astype(str)
+    .str.strip()
+    .str.lower()
+)
+
+arizona_method6_mask = (
+    state_normalized.isin(["az", "arizona"])
+    & nwss_data["major_lab_method"].eq("6")
+    & nwss_data["Date"].ge(
+        pd.Timestamp("2024-11-01")
+    )
+    & nwss_data["Arizona_Method6_Divisor"].notna()
+)
+
+# Keep the original value temporarily for audit output
+nwss_data["Original_gc_per_capita_day"] = (
+    nwss_data["gc/capita/day"]
+)
+
+nwss_data.loc[
+    arizona_method6_mask,
+    "gc/capita/day"
+] = (
+    nwss_data.loc[
+        arizona_method6_mask,
+        "Original_gc_per_capita_day"
+    ]
+    / nwss_data.loc[
+        arizona_method6_mask,
+        "Arizona_Method6_Divisor"
+    ]
+)
+
+
+# Temporary audit output
+adjusted_rows = nwss_data.loc[
+    arizona_method6_mask
+].copy()
+
+print("\nArizona method-6 adjustment audit:")
+print("Adjusted rows:", len(adjusted_rows))
+print(
+    "Adjusted sites:",
+    adjusted_rows["key_plot_id"].nunique()
+)
+
+print(
+    "First adjusted date:",
+    adjusted_rows["Date"].min()
+)
+
+print(
+    "Last adjusted date:",
+    adjusted_rows["Date"].max()
+)
+
+print("\nAdjusted observations by site:")
+print(
+    adjusted_rows.groupby("key_plot_id")
+    .agg(
+        Rows=("Date", "size"),
+        First_Date=("Date", "min"),
+        Last_Date=("Date", "max"),
+        Divisor=(
+            "Arizona_Method6_Divisor",
+            "first"
+        ),
+        Median_Original=(
+            "Original_gc_per_capita_day",
+            "median"
+        ),
+        Median_Adjusted=(
+            "gc/capita/day",
+            "median"
+        )
+    )
+    .sort_values(
+        "Median_Original",
+        ascending=False
+    )
+    .to_string()
+)
 
 # Remove negative values (defensive, should rarely occur)
 nwss_data["gc/capita/day"] = nwss_data["gc/capita/day"].clip(lower=0)
