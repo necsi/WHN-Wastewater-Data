@@ -676,9 +676,6 @@ df_inf = final_merged_data[final_merged_data['Measure'] == 'inf'].copy()
 # Step 2: Remove the "Country" and "Measure" columns
 df_inf = df_inf.drop(columns=['Country', 'Measure'])
 
-# Step 3: Existing regions present
-existing_regions = df_inf['Region'].unique()
-
 # Define the nationwide population
 nationwide_population = sum(state_population_estimates.values())
 
@@ -696,24 +693,26 @@ state_abbreviations2 = {
     'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
 }
 
-# Step 4: For states not in dataset, apportion Nationwide by state population
-nationwide_data_inf = df_inf[df_inf['Region'] == 'Nationwide'].copy()
-for state, pop in state_population_estimates.items():
-    if state not in existing_regions:
-        state_infections = nationwide_data_inf['Value'] * (pop / nationwide_population)
-        state_abbreviation2 = state_abbreviations2[state]
-        new_state_data = pd.DataFrame({
-            'Date': nationwide_data_inf['Date'],
-            'Region': state_abbreviation2,
-            'Value': state_infections
-        })
-        df_inf = pd.concat([df_inf, new_state_data], ignore_index=True)
-
-# Step 5: Convert states to two-letter abbreviations where necessary
+# Step 3: Convert states to two-letter abbreviations where necessary
 df_inf['Region'] = df_inf['Region'].replace(state_abbreviations2)
 
-# Step 6: Pivot so Nationwide first, then states A–Z
+# Step 4: Pivot the real state-specific estimates first
 df_pivot = df_inf.pivot(index='Date', columns='Region', values='Value').sort_index()
+
+# Step 5: Fill missing state/date values from Nationwide by population share.
+# This is deliberately per-date rather than per-state: if a real state series
+# stops (for example Louisiana), fallback fills only the missing dates. If the
+# real state series later resumes, those real values are kept automatically.
+for state, pop in state_population_estimates.items():
+    state_abbreviation2 = state_abbreviations2[state]
+    fallback = df_pivot['Nationwide'] * (pop / nationwide_population)
+
+    if state_abbreviation2 not in df_pivot.columns:
+        df_pivot[state_abbreviation2] = fallback
+    else:
+        df_pivot[state_abbreviation2] = df_pivot[state_abbreviation2].fillna(fallback)
+
+# Step 6: Nationwide first, then states A–Z
 cols = ['Nationwide'] + sorted([c for c in df_pivot.columns if c != 'Nationwide'])
 df_pivot = df_pivot[cols]
 
