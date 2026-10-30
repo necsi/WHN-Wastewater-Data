@@ -12,6 +12,16 @@ print(results_df)
 
 # Sort by date
 results_df['week_ending'] = pd.to_datetime(results_df['week_ending'])
+
+# Keep only the latest CDC publication for each region and period
+results_df['creation_date'] = pd.to_datetime(results_df['creation_date'])
+latest_publication = results_df.groupby(
+    ['usa_or_hhsregion', 'week_ending']
+)['creation_date'].transform('max')
+results_df = results_df[
+    results_df['creation_date'] == latest_publication
+].copy()
+
 sort_results = results_df.sort_values(by='week_ending')
 
 # Keep only columns 'usa_or_hhsregion', 'week_ending', 'variant', 'share' ###, 'share_hi', 'share_lo'
