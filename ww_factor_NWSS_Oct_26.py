@@ -262,8 +262,10 @@ nwss_data["is_outlier"] = (
     & (nwss_data["gc/capita/day"] > threshold_factor * nwss_data["rolling_median"])
 )
 
-nwss_data = nwss_data[~nwss_data["is_outlier"]].drop(columns=["is_outlier", "rolling_median"])
 
+nwss_data = nwss_data[
+    nwss_data["rolling_median"].notna() & ~nwss_data["is_outlier"]
+].drop(columns=["is_outlier", "rolling_median"])
 
 # -------------------------------------------------------------------
 # Extend recent sites to the overall most recent date; then interpolate (unchanged)
